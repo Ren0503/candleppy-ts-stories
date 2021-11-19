@@ -111,7 +111,7 @@ export const deleteArticle = asyncHandler(
 export const voteArticle = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params as { id: string };
-        const { vote } = req.body as { vote: number };
+        const vote = Number(req.query.vote) || 0;
 
         if (!req.user) {
             res.status(400);

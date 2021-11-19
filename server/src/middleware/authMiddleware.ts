@@ -47,7 +47,7 @@ export const protect = asyncHandler(
     }
 );
 
-export const isAdmin = asyncHandler(
+export const admin = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
         if (req.user && req.user.isAdmin){
             next();
