@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
 
-import { userRoutes } from './routes';
+import { collectionRoutes, storyRoutes, userRoutes } from './routes';
 import { notFound, errorHandler } from './middleware';
 
 dotenv.config();
@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
+app.use('/api/stories', storyRoutes);
+app.use('/api/collections', collectionRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
