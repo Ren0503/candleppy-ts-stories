@@ -6,7 +6,6 @@ export interface User {
     password: string;
     avatar: string;
     isAdmin?: boolean;
-    points: number;
 }
 
 export interface UserDocument extends User, Document {

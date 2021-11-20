@@ -1,180 +1,195 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from '../types';
-import { Article, User, Story } from '../models';
+import { Story } from '../models';
 
 export const getStories = asyncHandler(
     async (req: Request, res: Response) => {
         const pageSize = 8;
         const page = Number(req.query.pageNumber) || 1;
-        const sort = req.query.sort || '-createdAt';
+        const keyword = req.query.keyword
+		? {
+				title: {
+					$regex: req.query.keyword,
+					$options: 'i'
+				} as any
+		  }
+		: {};
+        const category = req.query.category
+		? {
+				category: {
+					$regex: req.query.category,
+					$options: 'i'
+				} as any
+		  }
+		: {};
 
-        const count = await Story.countDocuments();
-        const stories = await Story.find({})
-            .populate('author')
+        const count = await Story.countDocuments({ ...keyword, ...category });
+        const stories = await Story.find({ ...keyword, ...category })
+            .populate('author', 'name avatar')
             .limit(pageSize)
             .skip(pageSize * (page - 1))
-            .sort(sort)
+            .sort({ createdAt: -1 })
 
         res.json({ stories, page, pages: Math.ceil(count / pageSize) });
     }
 );
 
-export const getArticleById = asyncHandler(
+export const getStoryById = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params as { id: string };
 
-        const article = await Article.findById(id);
+        const story = await Story.findByIdAndUpdate(
+            id,
+            { $inc: { views: 1 } },
+            { new: true }
+        )
+        .populate('author', 'name avatar')
+        .populate('reviews.user', 'name avatar')
 
-        if (article) {
-            res.json(article);
+        if (story) {
+            res.json(story);
         } else {
             res.status(404);
-            throw new Error('Article not found');
+            throw new Error('Story not found');
         }
     }
 );
 
-export const createArticle = asyncHandler(
+export const createStory = asyncHandler(
     async (req: Request, res: Response) => {
-        const article = new Article({
-            user: req.user?._id,
-            name: 'Sample name',
+        const story = new Story({
+            author: req.user?._id,
+            title: 'Sample title',
             image: '/images/sample.jpg',
             category: 'Sample category',
             description: 'sample description',
             body: 'Sample body',
         });
-        const createdArticle = await article.save();
 
-        const user = await User.findById(req.user?._id);
-
-        if (user) {
-            user.points += 100;
-            await user.save();
-        }
-
-        res.status(201).json(createdArticle);
+        const createdStory = await story.save();
+        res.status(201).json(createdStory);
     }
 );
 
-export const updateArticle = asyncHandler(
+export const updateStory = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params as { id: string };
+        const story = await Story.findById(id);
 
-        const {
-            name,
-            description,
-            category,
-            image,
-            body
-        } = req.body as {
-            name: string;
-            description: string;
-            image: string;
-            category: string;
-            body: string;
-        };
-
-        const article = await Article.findById(id);
-
-        if (article) {
-            article.name = name;
-            article.description = description;
-            article.category = category;
-            article.image = image;
-            article.body = body;
-
-            const updatedArticle = await article.save();
-            res.status(201).json(updatedArticle);
-        } else {
+        if (!story) {
             res.status(404);
-            throw new Error('Article not found.');
+            throw new Error('Story not found.');
         }
-    }
-);
 
-export const deleteArticle = asyncHandler(
-    async (req: Request, res: Response) => {
-        const { id } = req.params as { id: string };
-        const article = await Article.findById(id);
-        if (article) {
-            await article.remove();
-            res.json({ message: 'Article Removed' });
-        } else {
+        if (story.author.toString() !== req.user?._id.toString()) {
             res.status(404);
-            throw new Error('Article not found.');
+            throw new Error('Not authorization to access.');
+        } else {
+            const {
+                title,
+                description,
+                category,
+                image,
+                body
+            } = req.body as {
+                title: string;
+                description: string;
+                image: string;
+                category: string;
+                body: string;
+            };
+
+            story.title = title;
+            story.description = description;
+            story.category = category;
+            story.image = image;
+            story.body = body;
+
+            const updatedStory = await story.save();
+            res.status(201).json(updatedStory);
         }
     }
 );
 
-export const voteArticle = asyncHandler(
+export const deleteStory = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params as { id: string };
-        const vote = Number(req.query.vote) || 0;
+        const story = await Story.findById(id);
+
+        if (!story) {
+            res.status(404);
+            throw new Error('Story not found.');
+        }
+
+        if (story.author.toString() !== req.user?._id.toString()) {
+            res.status(404);
+            throw new Error('Not authorization to access.');
+        } else {
+            await story.remove();
+            res.json({ message: 'Story Removed' });
+        }
+    }
+);
+
+export const getStoriesByAuthor = asyncHandler(
+    async(req: Request, res: Response) => {
+        const { userId } = req.params as { userId: string };
+        const stories = await Story.find({ author: userId })
+
+        res.json(stories);
+    }
+);
+
+export const createStoryReview = asyncHandler(
+    async (req: Request, res: Response) => {
+        const { id } = req.params as { id: string };
+        const story = await Story.findById(id);
 
         if (!req.user) {
-            res.status(400);
-            throw new Error('User not found');
-        }
+			res.status(400);
+			throw new Error('User not found');
+		}
 
-        const article = await Article.findById(id);
-        if (article) {
-            const alreadyVote = article.votes.find(
-                (v) => v.user.toString() === req.user!._id.toString()
+        const { rating, comment } = req.body as {
+			rating: number;
+			comment: string;
+		};
+
+        if (story) {
+            const alreadyReviewed = story.reviews.find(
+                (r) => r.user.toString() === req.user!._id.toString()
             );
 
-            if (alreadyVote) {
-                if (vote == alreadyVote.vote) {
-                    alreadyVote.vote = 0;
-                } else {
-                    alreadyVote.vote = vote;
-                }
+            if (alreadyReviewed) {
+				res.status(400);
+				throw new Error('Story already reviewed');
+			}
 
-                res.status(201).json({ message: 'Change voted' });
-            }
+            const review = {
+				rating,
+				comment,
+				user: req.user._id
+			};
+            
+            story.reviews.push(review);
+            story.numReviews = story.reviews.length;
+            story.rating =
+                story.reviews.reduce((acc, item) => item.rating + acc, 0) /
+                story.reviews.length;
 
-            const createdVote = {
-                user: req.user._id,
-                vote: vote
-            };
-
-            article.votes.push(createdVote);
-
-            article.score = article.votes.reduce((acc, item) => item.vote + acc, 0);
-
-            await article.save();
-            res.status(201).json({ message: 'Vote Added' });
+            await story.save();
+            res.status(201).json({ message: 'Review Added' });
         } else {
             res.status(404);
-			throw new Error('Article not found.');
+			throw new Error('Story not found.');
         }
     }
 );
 
-export const commentArticle = asyncHandler(
-    async(req: Request, res: Response) => {
-		const { id } = req.params as { id: string };
-        const { body } = req.body as { body: string };
+export const getTopStories = asyncHandler(
+    async (req: Request, res: Response) => {
+        const stories = await Story.find({}).sort({ views: -1 }).limit(5);
 
-        if (!req.user) {
-            res.status(400);
-            throw new Error('User not found');
-        }
-
-        const article = await Article.findById(id);
-        if (article) {
-            const comment = {
-                user: req.user._id,
-                body
-            };
-
-            article.comments.push(comment);
-
-            await article.save();
-            res.status(201).json({ message: "Comment added" });
-        } else {
-            res.status(404);
-			throw new Error('Article not found.');
-        }
+        res.json(stories);
     }
 );

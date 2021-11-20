@@ -54,14 +54,6 @@ const storySchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    isBestForWeek: {
-        type: Boolean,
-        default: false,
-    },
-    isBestForMonth: {
-        type: Boolean,
-        default: false,
-    },
 }, {
     timestamps: true
 });

@@ -13,7 +13,6 @@ const collectionSchema = new mongoose.Schema({
     },
     stories: [{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'Story'
     }],
     numStories: {

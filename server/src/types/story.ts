@@ -11,8 +11,6 @@ export interface Story {
     numReviews: number;
     reviews: Review[];
     views: number;
-    isBestForWeek: boolean;
-    isBestForMonth: boolean;
 }
 
 export interface Review {
