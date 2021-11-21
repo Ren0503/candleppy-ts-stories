@@ -1,3 +1,3 @@
 export * from './userActions';
-export * from './productActions';
-export * from './orderActions';
+export * from './storyActions';
+export * from './collectionActions';

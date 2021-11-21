@@ -26,8 +26,8 @@ export const login = (email: string, password: string): AppThunk => async (
         };
 
         const { data } = await axios.post<TokenUser>(
-            '/api/users/login/',
-            { 'username': email, 'password': password },
+            '/api/users/login',
+            { email, password },
             config
         );
 
@@ -61,8 +61,8 @@ export const register = (
             headers: { 'Content-Type': 'Application/json' }
         };
         const { data } = await axios.post<TokenUser>(
-            '/api/users/register/',
-            { 'name': name, 'email': email, 'password': password },
+            '/api/users',
+            { name, email, password },
             config
         );
 
@@ -101,7 +101,7 @@ export const getUserDetail = (id: string): AppThunk => async (
 			}
 		};
 
-		const { data } = await axios.get<User>(`/api/users/${id}/`, config);
+		const { data } = await axios.get<User>(`/api/users/${id}`, config);
 
 		dispatch({
 			type: UserDetailActionTypes.USER_DETAIL_SUCCESS,
@@ -135,7 +135,7 @@ export const updateUserProfile = (user: PasswordUser): AppThunk => async (
 		};
 
 		const { data } = await axios.put<TokenUser>(
-			`/api/users/profile/update`,
+			`/api/users/profile`,
 			user,
 			config
 		);
@@ -172,7 +172,7 @@ export const listUsers = (): AppThunk => async (dispatch, getState) => {
 			}
 		};
 
-		const { data } = await axios.get<User[]>(`/api/users/`, config);
+		const { data } = await axios.get<User[]>(`/api/users`, config);
 		
         dispatch({
 			type: UserListActionTypes.USER_LIST_SUCCESS,
@@ -202,7 +202,7 @@ export const deleteUser = (id: string): AppThunk => async (
 			}
 		};
 
-		await axios.delete(`/api/users/${id}/`, config);
+		await axios.delete(`/api/users/${id}`, config);
 		
         dispatch({ type: UserDeleteActionTypes.USER_DELETE_SUCCESS });
 	} catch (error) {
@@ -231,7 +231,7 @@ export const updateUser = (user: User): AppThunk => async (
 			}
 		};
 
-		await axios.put(`/api/users/update/${user._id}/`, user, config);
+		await axios.put(`/api/users/${user._id}`, user, config);
 
 		dispatch({
 			type: UserUpdateActionTypes.USER_UPDATE_SUCCESS
