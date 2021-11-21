@@ -17,7 +17,6 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
             avatar: user.avatar,
             isAdmin: user.isAdmin,
             token: generateToken(user._id),
-            points: user.points,
         });
     } else {
         res.status(401);
@@ -56,7 +55,6 @@ export const register = asyncHandler(
                 avatar: user.avatar,
                 isAdmin: user.isAdmin,
                 token: generateToken(user._id),
-                points: user.points,
             });
         } else {
             res.status(400);
@@ -75,7 +73,6 @@ export const getUserProfile = asyncHandler(
                 email: user.email,
                 avatar: user.avatar,
                 isAdmin: user.isAdmin,
-                points: user.points,
             });
         } else {
             throw new Error('User not found');

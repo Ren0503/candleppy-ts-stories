@@ -7,15 +7,13 @@ import { collectionRoutes, storyRoutes, userRoutes } from './routes';
 import { notFound, errorHandler } from './middleware';
 
 dotenv.config();
-if (process.env.NODE_ENV === 'development') {
-	morgan('dev');
-}
 
 connectDB();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(morgan('dev'))
 
 app.use('/api/users', userRoutes);
 app.use('/api/stories', storyRoutes);
