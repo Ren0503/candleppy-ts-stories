@@ -20,7 +20,7 @@ export interface FetchStoriesRequestAction {
 
 export interface FetchStoriesSuccessAction {
     type: StoryListActionTypes.STORY_LIST_SUCCESS;
-    payload: { products: Story[]; pages: number; page: number };
+    payload: { stories: Story[]; pages: number; page: number };
 }
 
 export interface FetchStoriesFailureAction {

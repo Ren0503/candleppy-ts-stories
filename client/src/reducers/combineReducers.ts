@@ -10,41 +10,47 @@ import {
 } from './userReducers';
 
 import {
-	productListReducer,
-	productDetailReducer,
-    productDeleteReducer,
-	productCreateReducer,
-	productUpdateReducer,
-    productTopRatedReducer
-} from './productReducers';
+	storyListReducer,
+	storyDetailReducer,
+    storyDeleteReducer,
+	storyCreateReducer,
+	storyUpdateReducer,
+    storyTopRatedReducer,
+	storyCreateReviewReducer,
+	storyAuthorReducer,
+} from './storyReducers';
 
 import {
-    orderDetailReducer,
-	orderPayReducer,
-    orderListReducer,
-	orderDeliverReducer,
-} from './orderReducers';
+    collectionAddStoryReducer,
+	collectionRemoveStoryReducer,
+    collectionCreateReducer,
+	collectionDeleteReducer,
+	collectionUserReducer,
+} from './collectionReducers';
 
 import { ReduxState } from 'types/ReduxState';
 
 const reducer = combineReducers<ReduxState>({
-	productList: productListReducer,
-	productDetail: productDetailReducer,
-	userLogin: userLoginReducer,
+    userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
 	userDetail: userDetailReducer,
 	userUpdateProfile: userUpdateProfileReducer,
-	orderDetail: orderDetailReducer,
-	orderPay: orderPayReducer,
 	userList: userListReducer,
 	userDelete: userDeleteReducer,
 	userUpdate: userUpdateReducer,
-	productDelete: productDeleteReducer,
-	productCreate: productCreateReducer,
-	ProductUpdate: productUpdateReducer,
-	orderList: orderListReducer,
-	orderDeliver: orderDeliverReducer,
-	productTopRated: productTopRatedReducer
+    storyList: storyListReducer,
+	storyDetail: storyDetailReducer,
+	storyDelete: storyDeleteReducer,
+	storyCreate: storyCreateReducer,
+	storyUpdate: storyUpdateReducer,
+	storyTopRated: storyTopRatedReducer,
+	storyCreateReview: storyCreateReviewReducer,
+	storyAuthor: storyAuthorReducer,
+	collectionAddStory: collectionAddStoryReducer,
+	collectionRemoveStory: collectionRemoveStoryReducer,
+	collectionUser: collectionUserReducer,
+	collectionCreate: collectionCreateReducer,
+	collectionDelete: collectionDeleteReducer,
 });
 
 export default reducer;

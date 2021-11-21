@@ -1,7 +1,7 @@
 import { Collection } from './Collection';
 
 export interface CollectionUserState {
-	stories: Collection[];
+	collections: Collection[];
 	loading?: boolean;
 	error?: undefined;
 }

@@ -18,7 +18,11 @@ export interface Story {
 
 export interface Review {
     _id: string;
-    user: string;
+    user: {
+        _id: string;
+        name: string;
+        avatar: string;
+    };
     rating: number;
     comment: string;
     createdAt: string;
