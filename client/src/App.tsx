@@ -1,24 +1,24 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-
+import { Container } from 'styles/Layout';
+import { theme } from 'styles/theme';
 import { Header, Footer } from 'components/core';
+import { GlobalStyle } from 'styles/GlobalStyles';
 
-import LoginScreen from 'screens/Auth/LoginScreen';
-import RegisterScreen from 'screens/Auth/RegisterScreen';
 
 const App = () => {
   return (
-    <Router>
-      <Header />
-      <main className="py-3">
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        <Header />
         <Container>
-          <Route path='/login' component={LoginScreen} />
-          <Route path='/register' component={RegisterScreen} />
+          <p>Hello World</p>
         </Container>
-      </main>
-      <Footer />
-    </Router>
+        <Footer />
+      </>
+    </ThemeProvider>
   )
 }
 
