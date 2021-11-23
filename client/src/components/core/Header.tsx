@@ -1,68 +1,69 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { ReduxState } from 'types/ReduxState';
-import { logout } from 'actions';
-import { AppDispatch } from 'store';
+import styled from 'styled-components';
+import { theme } from 'styles/theme';
+import { Container, Flex } from 'styles/Layout';
+import { Button } from 'styles/Button';
+
+const StyledHeader = styled.header`
+    background-color: ${theme.colors.background};
+    padding: ${theme.spacing.lg} ${theme.spacing.none};
+`;
+
+export const Nav = styled.nav`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: ${theme.spacing.lg};
+
+    @media (max-width: ${theme.size.mobile}) {
+        flex-direction: column;
+    }
+`;
+
+export const Logo = styled.img`
+    @media (max-width: ${theme.size.mobile}) {
+        margin-bottom: ${theme.spacing.lg};
+    }
+`;
+
+export const Image = styled.img`
+    width: 375px;
+    margin-left: ${theme.spacing.lg};
+
+    @media (max-width: ${theme.size.mobile}) {
+        margin: ${theme.spacing.lg} 0 ${theme.spacing.md};
+    }
+`;
 
 const Header = () => {
-    const history = useHistory();
-    const dispatch = useDispatch<AppDispatch>();
-    const { userInfo } = useSelector((state: ReduxState) => state.userLogin);
-    const logoutHandler = () => dispatch(logout(() => history.push('/')));
-
     return (
-        <header>
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
-                <Container>
-                    <LinkContainer to='/'>
-                        <Navbar.Brand>ProShop</Navbar.Brand>
-                    </LinkContainer>
-                    <Navbar.Toggle aria-controls='basic-navbar-nav' />
-                    <Navbar.Collapse id='basic-navbar-nav'>
-                        <Nav className='ml-auto'>
-                            <LinkContainer to='/cart'>
-                                <Nav.Link>
-                                    <i className='fas fa-shopping-cart'></i> Cart
-                                </Nav.Link>
-                            </LinkContainer>
-                            {userInfo ? (
-                                <NavDropdown title={userInfo.name} id='username'>
-                                    <LinkContainer to='/profile'>
-                                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <NavDropdown.Item onClick={logoutHandler}>
-                                        Logout
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            ) : (
-                                <LinkContainer to='/login'>
-                                    <Nav.Link>
-                                        <i className='fas fa-user'></i> Sign In
-                                    </Nav.Link>
-                                </LinkContainer>
-                            )}
-                            {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title='Admin' id='adminmenu'>
-                                    <LinkContainer to='/admin/userlist'>
-                                        <NavDropdown.Item>Users</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to='/admin/productlist'>
-                                        <NavDropdown.Item>Products</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to='/admin/orderlist'>
-                                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                                    </LinkContainer>
-                                </NavDropdown>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </header>
-    );
+        <StyledHeader>
+            <Container>
+                <Nav>
+                    <Logo src='./images/logo.svg' alt='' />
+                    <Button>Try It Free</Button>
+                </Nav>
+
+                <Flex>
+                    <div>
+                        <h1>Build The Community Your Fans Will Love</h1>
+
+                        <p>
+                            Huddle re-imagines the way we build communities. You have a voice,
+                            but so does your audience. Create connections with your users as
+                            you engage in genuine discussion.
+                        </p>
+
+                        <Button>
+                            Get Started For Free
+                        </Button>
+                    </div>
+
+                    <Image src='./images/illustration-mockups.svg' alt='' />
+                </Flex>
+            </Container>
+        </StyledHeader>
+    )
 }
 
-export default Header;
+export default Header

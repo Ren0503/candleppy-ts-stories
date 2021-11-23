@@ -47,5 +47,8 @@ export const theme = {
         md: 30,
         lg: 40,
         xl: 50,
+    },
+    size: {
+        mobile: '768px',
     }
 };
