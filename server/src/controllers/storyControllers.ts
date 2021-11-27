@@ -4,8 +4,6 @@ import { Story } from '../models';
 
 export const getStories = asyncHandler(
     async (req: Request, res: Response) => {
-        const pageSize = 8;
-        const page = Number(req.query.pageNumber) || 1;
         const keyword = req.query.keyword
 		? {
 				title: {
@@ -26,11 +24,9 @@ export const getStories = asyncHandler(
         const count = await Story.countDocuments({ ...keyword, ...category });
         const stories = await Story.find({ ...keyword, ...category })
             .populate('author', 'name avatar')
-            .limit(pageSize)
-            .skip(pageSize * (page - 1))
             .sort({ createdAt: -1 })
 
-        res.json({ stories, page, pages: Math.ceil(count / pageSize) });
+        res.json({ stories, count });
     }
 );
 

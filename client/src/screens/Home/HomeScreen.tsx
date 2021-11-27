@@ -13,25 +13,22 @@ import MainLayout from 'layouts/MainLayout';
 interface MatchParams {
     keyword: string;
     category: string;
-    pageNumber: string;
 }
 interface HomeScreenProps extends RouteComponentProps<MatchParams> { }
 
 const HomeScreen = ({
     match: {
-        params: { keyword, category, pageNumber: pgNumber }
+        params: { keyword, category }
     }
 }: HomeScreenProps) => {
-    const pageNumber = pgNumber || '1';
-
     const dispatch = useDispatch<AppDispatch>();
 
     const storyList = useSelector((state: ReduxState) => state.storyList)
-    const { loading, error, stories, page, pages } = storyList;
+    const { loading, error, stories, count } = storyList;
 
     useEffect(() => {
-        dispatch(listStories(keyword, category, pageNumber));
-    }, [dispatch, keyword, category, pageNumber]);
+        dispatch(listStories(keyword, category));
+    }, [dispatch, keyword, category]);
 
     const displayStories = () => {
         if (loading) return <Loader />

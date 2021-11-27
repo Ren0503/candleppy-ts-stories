@@ -5,7 +5,6 @@ import AuthRoutes from 'routes/AuthRoutes';
 import MainRoutes from 'routes/MainRoutes';
 import { ScrollToTop } from 'components/shared';
 
-
 const App = () => {
   return (
     <div className="App">

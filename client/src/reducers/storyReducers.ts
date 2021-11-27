@@ -44,8 +44,7 @@ export const storyListReducer = (
             return {
                 loading: initialStoryListState.loading,
                 stories: action.payload.stories,
-                pages: action.payload.pages,
-                page: action.payload.page
+                count: action.payload.count,
             };
         case StoryListActionTypes.STORY_LIST_FAILURE:
             return {

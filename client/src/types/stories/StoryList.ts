@@ -2,8 +2,7 @@ import { Story } from './Story';
 
 export interface StoryListState {
     stories: Story[];
-    pages?: number;
-    page?: number;
+    count?: number;
     loading: boolean;
     error?: undefined;
 }
@@ -20,7 +19,7 @@ export interface FetchStoriesRequestAction {
 
 export interface FetchStoriesSuccessAction {
     type: StoryListActionTypes.STORY_LIST_SUCCESS;
-    payload: { stories: Story[]; pages: number; page: number };
+    payload: { stories: Story[]; count: number };
 }
 
 export interface FetchStoriesFailureAction {

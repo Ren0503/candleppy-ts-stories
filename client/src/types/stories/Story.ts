@@ -14,6 +14,7 @@ export interface Story {
     rating: number;
     numReviews: number;
     reviews: Array<Review>;
+    createdAt: string;
 }
 
 export interface Review {
