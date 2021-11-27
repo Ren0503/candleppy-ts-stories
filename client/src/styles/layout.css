@@ -1,0 +1,121 @@
+/* Button */
+.btn {
+    border-radius: 15px;
+}
+
+.btn-dark {
+    color: #000;
+    background-color: #fff;
+    margin: 0 5px;
+}
+
+.btn-light {
+    color: #fff;
+    background: none;
+}
+
+.btn-red {
+    color: #fff;
+    background-color: #f43547;
+    border: none;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #121117;
+    color: #fff;
+}
+
+.navbar .nav-link {
+    color: #fff !important;
+}
+
+.title {
+    color: #fff;
+}
+
+.paper {
+    color: #fff;
+    background-color: #0a0a0a;
+    padding: 32px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.paper h3 {
+    border-bottom: 1px solid;
+}
+
+.paper-body {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid;
+}
+
+.table {
+    color: #fff;
+}
+
+.home {
+    background-image: url("assets/auth.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+/*
+    Search
+*/
+.search {
+    margin: auto;
+    padding: 5rem 2rem;
+}
+
+.search input {
+    width: 80% !important;
+}
+
+.search button {
+    border-radius: 50%;
+    padding: 6px 10px !important;
+}
+@media screen and (max-width: 768px) {
+    .home {
+        padding: 2rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .home {
+        padding: 1rem;
+    }
+    .search {
+        padding: 3rem 1rem;
+    }
+    .search input {
+        font-size: 10px;
+    }
+    .search button {
+        font-size: 10px;
+        padding: 5px 8px !important;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .home {
+        padding: 0;
+    }
+}
+
+/*
+    Scroll To Top 
+*/
+.scroll-to-top {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    animation: fadeIn 700ms ease-in-out 1s both;
+    cursor: pointer;
+    z-index: 99;
+}

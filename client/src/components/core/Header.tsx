@@ -1,69 +1,77 @@
 import React from 'react';
-import styled from 'styled-components';
-import { theme } from 'styles/theme';
-import { Container, Flex } from 'styles/Layout';
-import { Button } from 'styles/Button';
+import {     
+    Container, 
+    Image, 
+    Nav, 
+    Navbar, 
+    NavDropdown, 
+    Button  
+} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, Link } from 'react-router-dom';
 
-const StyledHeader = styled.header`
-    background-color: ${theme.colors.background};
-    padding: ${theme.spacing.lg} ${theme.spacing.none};
-`;
-
-export const Nav = styled.nav`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: ${theme.spacing.lg};
-
-    @media (max-width: ${theme.size.mobile}) {
-        flex-direction: column;
-    }
-`;
-
-export const Logo = styled.img`
-    @media (max-width: ${theme.size.mobile}) {
-        margin-bottom: ${theme.spacing.lg};
-    }
-`;
-
-export const Image = styled.img`
-    width: 375px;
-    margin-left: ${theme.spacing.lg};
-
-    @media (max-width: ${theme.size.mobile}) {
-        margin: ${theme.spacing.lg} 0 ${theme.spacing.md};
-    }
-`;
+import { ReduxState } from 'types/ReduxState';
+import { logout } from 'actions';
+import { AppDispatch } from 'store';
+import logo from 'assets/header.png';
 
 const Header = () => {
+    const history = useHistory();
+    const dispatch = useDispatch<AppDispatch>();
+    const { userInfo } = useSelector((state: ReduxState) => state.userLogin);
+    const logoutHandler = () => dispatch(logout(() => history.push('/')));
+
     return (
-        <StyledHeader>
+        <Navbar className='' expand='lg' collapseOnSelect>
             <Container>
-                <Nav>
-                    <Logo src='./images/logo.svg' alt='' />
-                    <Button>Try It Free</Button>
-                </Nav>
-
-                <Flex>
-                    <div>
-                        <h1>Build The Community Your Fans Will Love</h1>
-
-                        <p>
-                            Huddle re-imagines the way we build communities. You have a voice,
-                            but so does your audience. Create connections with your users as
-                            you engage in genuine discussion.
-                        </p>
-
-                        <Button>
-                            Get Started For Free
-                        </Button>
-                    </div>
-
-                    <Image src='./images/illustration-mockups.svg' alt='' />
-                </Flex>
+                <Link to='/'>
+                    <Navbar.Brand>
+                        <Image src={logo} alt="Logo" width="150" className="Logo" />
+                    </Navbar.Brand>
+                </Link>
+                <Navbar.Toggle aria-controls='navbarScroll' style={{ backgroundColor: '#fff' }} />
+                <Navbar.Collapse id='navbarScroll'>
+                    <Nav className='ml-auto' navbarScroll>
+                        <Nav.Link href="/category">All</Nav.Link>
+                        <Nav.Link href="/category/discuss">Discuss</Nav.Link>
+                        <Nav.Link href="/category/science">Science</Nav.Link>
+                        <Nav.Link href="/category/culture">Culture</Nav.Link>
+                        <Nav.Link href="/category/sharing">Sharing</Nav.Link>
+                        <Nav.Link href="/category/indite">Indite</Nav.Link>
+                        {userInfo ? (
+                            <>
+                                <Image src={userInfo.avatar} width="40" height="40" roundedCircle />
+                                <NavDropdown title={userInfo.name} id='username'>
+                                    <Link to='/my_stories'>
+                                        <NavDropdown.Item href="/my_stories">My Stories</NavDropdown.Item>
+                                    </Link>
+                                    <Link to='/profile'>
+                                        <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                                    </Link>
+                                    <NavDropdown.Item onClick={logoutHandler}>
+                                        Logout
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </>
+                        ) : (
+                            <>
+                                <Nav.Link href="/login" style={{ padding: 0, margin: 0 }}>
+                                    <Button className="btn-light">
+                                        Login
+                                    </Button>
+                                </Nav.Link>
+                                <Nav.Link href="/login" style={{ padding: 0, margin: 0 }}>
+                                    <Button className="btn-dark">
+                                        Register
+                                    </Button>
+                                </Nav.Link>
+                            </>
+                        )}
+                    </Nav>
+                </Navbar.Collapse>
             </Container>
-        </StyledHeader>
-    )
-}
+        </Navbar>
+    );
+};
 
-export default Header
+export default Header;
