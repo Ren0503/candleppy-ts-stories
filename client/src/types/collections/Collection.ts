@@ -7,6 +7,6 @@ export interface Collection {
         avatar: string;
     }
     name: string;
-    stories: Story[];
+    stories: Array<Story>;
     numStories: number;
 }

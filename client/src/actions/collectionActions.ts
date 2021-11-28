@@ -66,13 +66,21 @@ export const deleteCollection = (id: string): AppThunk => async (dispatch, getSt
     }
 };
 
-export const listCollectionsUser = (userId: string): AppThunk => async (dispatch) => {
+export const listCollectionsUser = (): AppThunk => async (dispatch, getState) => {
     try {
         dispatch({
             type: CollectionUserActionTypes.COLLECTION_USER_REQUEST
         });
 
-        const { data } = await axios.get<Collection[]>(`/api/collections/user/${userId}`);
+        const { userInfo } = getState().userLogin;
+		const config = {
+			headers: {
+				'Content-Type': 'Application/json',
+				Authorization: `Bearer ${userInfo?.token}`
+			}
+		};
+
+        const { data } = await axios.get<Collection[]>(`/api/collections/my_collections`, config);
 
         dispatch({
             type: CollectionUserActionTypes.COLLECTION_USER_SUCCESS,

@@ -4,7 +4,7 @@ import {
     removeStoryToCollection,
     getCollectionById,
     deleteCollection,
-    getCollectionsByUser,
+    getMyCollections,
     createCollection
 } from '../controllers';
 import { protect } from '../middleware';
@@ -14,8 +14,8 @@ const router = Router();
 router.route('/')
     .post(protect, createCollection)
     
-router.route('/user/:userId')
-    .get(getCollectionsByUser)
+router.route('/my_collections')
+    .get(protect, getMyCollections)
 
 router.route('/:id/add')
     .post(protect, addStoryToCollection)

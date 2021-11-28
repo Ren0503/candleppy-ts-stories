@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import DetailScreen from 'screens/Home/DetailScreen';
 import HomeScreen from 'screens/Home/HomeScreen';
 import EditScreen from 'screens/Settings/EditScreen';
+import ProfileScreen from 'screens/Settings/ProfileScreen';
 
 const MainRoutes = () => {
     return (
@@ -11,6 +12,7 @@ const MainRoutes = () => {
             <Route path='/category/:category' component={HomeScreen} exact />
             <Route path='/story/:id/edit' component={EditScreen} exact />
             <Route path="/story/:id" component={DetailScreen} exact />
+            <Route path='/profile' component={ProfileScreen} exact />
             <Route path="/" component={HomeScreen} exact />
         </Switch>
     );

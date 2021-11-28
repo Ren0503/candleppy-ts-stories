@@ -115,10 +115,14 @@ export const deleteCollection = asyncHandler(
     }
 );
 
-export const getCollectionsByUser = asyncHandler(
+export const getMyCollections = asyncHandler(
     async(req: Request, res: Response) => {
-        const { userId } = req.params as { userId: string };
-        const collections = await Collection.find({ user: userId })
+        if (!req.user) {
+            res.status(400);
+            throw new Error('User not authorized.');
+        }
+
+        const collections = await Collection.find({ user: req.user._id }).populate('stories')
 
         res.json(collections);
     }
