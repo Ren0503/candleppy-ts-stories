@@ -7,7 +7,7 @@ import { ListGroup, Row, Col, Form, Image, Button, Breadcrumb, Badge } from 'rea
 import { Rating, TopStories, TextToSpeech } from 'components/stories';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 import { StoryCreateReviewActionTypes } from 'types/stories';
 
 interface MatchParams {

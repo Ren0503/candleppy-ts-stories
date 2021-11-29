@@ -8,7 +8,7 @@ import { Story } from 'components/stories';
 import { Search } from 'components/core';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 
 interface MatchParams {
     keyword: string;

@@ -7,16 +7,16 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
-import AuthLayout from 'layouts/AuthLayout';
+import { AuthLayout } from 'layouts';
 
-interface LoginScreenProps extends RouteComponentProps {}
+interface LoginScreenProps extends RouteComponentProps { }
 
 const LoginScreen = ({ location: { search }, history }: LoginScreenProps) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
     const dispatch = useDispatch<AppDispatch>();
-    
+
     const userLogin = useSelector((state: ReduxState) => state.userLogin);
     const { loading, error, userInfo } = userLogin;
 
@@ -28,10 +28,10 @@ const LoginScreen = ({ location: { search }, history }: LoginScreenProps) => {
         }
     }, [history, userInfo, redirect]);
 
-	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		dispatch(login(email, password));
-	};
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(login(email, password));
+    };
 
     return (
         <AuthLayout>

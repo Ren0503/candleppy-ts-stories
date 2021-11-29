@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { detailCollection } from 'actions';
+import { deleteCollection, detailCollection, removeStoryFromCollection } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Message, Loader } from 'components/shared';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 import { RouteComponentProps } from 'react-router-dom';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
@@ -12,8 +11,6 @@ import {
     Row,
     Col,
     Image,
-    OverlayTrigger,
-    Tooltip,
     Card,
     Badge
 } from 'react-bootstrap';
@@ -41,6 +38,12 @@ const CollectionScreen = ({
     const collectionDetail = useSelector((state: ReduxState) => state.collectionDetail);
     const { loading, error, collection } = collectionDetail;
 
+    const collectionDelete = useSelector((state: ReduxState) => state.collectionDelete);
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = collectionDelete;
+
+    const collectionRemoveStory = useSelector((state: ReduxState) => state.collectionRemoveStory);
+    const { loading: loadingRemove, error: errorRemove, success: successRemove } = collectionRemoveStory;
+
     useEffect(() => {
         if (!userInfo || userInfo !== collection?.user) {
             history.push('/login');
@@ -50,12 +53,28 @@ const CollectionScreen = ({
             setAvatar(userInfo.avatar);
             setBio(userInfo.bio)
         }
-    }, [id, dispatch, userInfo]);
+    }, [id, dispatch, userInfo, successDelete, successRemove]);
+
+    const deleteHandler = (id: string) => {
+        if (window.confirm('Are you sure')) {
+            dispatch(deleteCollection(id));
+        }
+    };
+
+    const removeHandler = (collectionId: string, storyId: string) => {
+        if (window.confirm('Are you sure')) {
+            dispatch(removeStoryFromCollection(collectionId, storyId));
+        }
+    }
 
     const displayCollectionDetail = () => {
-        if (loading) return <Loader />;
+        if (loading || loadingDelete || loadingRemove) return <Loader />;
         else if (error || !collection)
             return <Message variant='danger'>{error}</Message>;
+        else if (errorDelete)
+            return <Message variant='danger'>{errorDelete}</Message>;
+        else if (errorRemove)
+            return <Message variant='danger'>{errorRemove}</Message>;
         else
             return (
                 <>
@@ -74,6 +93,13 @@ const CollectionScreen = ({
                         <Col md={9}>
                             <h3>{collection.name}</h3>
                             <p className="text-right">Number: {collection.numStories}</p>
+
+                            <Button
+                                className='btn-red text-right'
+                                onClick={() => deleteHandler(collection._id)}>
+                                <i className='fas fa-trash'></i>
+                            </Button>
+
                             {collection.stories.map((story) => {
                                 <Row>
                                     <Col md={3}>
@@ -81,11 +107,19 @@ const CollectionScreen = ({
                                     </Col>
                                     <Col md={9}>
                                         <Badge>{story.category}</Badge>
+
                                         <h6>{story.title}</h6>
+
                                         {story.description.length > 30
                                             ? <p>{story.description.substring(0, 30) + "..."}</p>
                                             : <p>story.description</p>
                                         }
+
+                                        <Button
+                                            className='btn-red text-right'
+                                            onClick={() => removeHandler(collection._id, story._id)}>
+                                            <i className='fas fa-trash'></i>
+                                        </Button>
                                     </Col>
                                 </Row>
                             })}

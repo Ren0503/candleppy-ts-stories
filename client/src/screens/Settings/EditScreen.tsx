@@ -4,7 +4,7 @@ import { detailStory, updateStory } from 'actions/storyActions';
 import { Loader, Message } from 'components/shared';
 import { Form, Button, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

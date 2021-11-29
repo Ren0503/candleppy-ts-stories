@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Message } from 'components/shared';
 import { Breadcrumb, Col, Row, Image } from 'react-bootstrap';
 import { Story } from 'components/stories';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 import { RouteComponentProps } from 'react-router-dom';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';

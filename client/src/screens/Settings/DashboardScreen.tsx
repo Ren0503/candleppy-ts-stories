@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createCollection, createStory, listCollectionsUser } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Message, Loader } from 'components/shared';
-import MainLayout from 'layouts/MainLayout';
+import { MainLayout } from 'layouts';
 import { RouteComponentProps } from 'react-router-dom';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';

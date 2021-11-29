@@ -7,13 +7,13 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
-import AuthLayout from 'layouts/AuthLayout';
+import { AuthLayout } from 'layouts';
 
-interface RegisterScreenProps extends RouteComponentProps {}
+interface RegisterScreenProps extends RouteComponentProps { }
 
 const RegisterScreen = ({
-	location: { search },
-	history
+    location: { search },
+    history
 }: RegisterScreenProps) => {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -34,7 +34,7 @@ const RegisterScreen = ({
         }
     }, [history, userInfo, redirect]);
 
-	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setMessage('Password do not match');
