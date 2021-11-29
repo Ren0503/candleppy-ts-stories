@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createStoryReview, detailStory } from 'actions';
 import { Loader, Message } from 'components/shared';
 import { ListGroup, Row, Col, Form, Image, Button, Breadcrumb, Badge } from 'react-bootstrap';
-import { Rating, TopStories } from 'components/stories';
+import { Rating, TopStories, TextToSpeech } from 'components/stories';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import MainLayout from 'layouts/MainLayout';
@@ -69,6 +69,7 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                     </Breadcrumb>
                     <Row>
                         <Col md={9}>
+                            <TextToSpeech text={story.body} />
                             <div className="paper text-justify">
                                 <h3 className="text-center p-3">{story.title}</h3>
                                 <i>"{story.description}"</i>

@@ -60,7 +60,7 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", "blog_post");
+        formData.append("upload_preset", "creepy_story");
         formData.append("cloud_name", "dsvc4kfvh");
         setUploading(true);
 
