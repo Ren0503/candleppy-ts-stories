@@ -16,7 +16,7 @@ interface MatchParams {
 
 interface UserScreenProps extends RouteComponentProps<MatchParams> { }
 
-const UserScreen = ({
+const AuthorScreen = ({
     match: {
         params: { id }
     },
@@ -84,4 +84,4 @@ const UserScreen = ({
     );
 };
 
-export default UserScreen;
+export default AuthorScreen;

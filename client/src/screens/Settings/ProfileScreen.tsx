@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { createStory, getUserDetail, listCollectionsUser, updateUserProfile } from 'actions';
+import { getUserDetail, updateUserProfile } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Row, Col, Table, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Form, Button, Image } from 'react-bootstrap';
 import { Message, Loader } from 'components/shared';
 import MainLayout from 'layouts/MainLayout';
 import { RouteComponentProps } from 'react-router-dom';
@@ -34,30 +34,16 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
     const userUpdateProfile = useSelector((state: ReduxState) => state.userUpdateProfile);
     const { success } = userUpdateProfile;
 
-    const collectionUser = useSelector((state: ReduxState) => state.collectionUser)
-    const { collections, loading: loadingCollections, error: errorCollections } = collectionUser;
-
-    const storyCreate = useSelector((state: ReduxState) => state.storyCreate)
-    const {
-        success: successCreate,
-        story: createdStory,
-        loading: loadingCreate,
-        error: errorCreate
-    } = storyCreate;
-
     useEffect(() => {
         if (!userInfo) {
             history.push('/login');
         } else {
-            if (successCreate && createdStory)
-                history.push(`/story/${createdStory._id}/edit`)
             if (success) {
                 setUpdateMessage(true);
             }
             if (!user || success) {
                 dispatch({ type: UserUpdateProfileActionTypes.USER_UPDATE_PROFILE_RESET });
                 dispatch(getUserDetail('profile'));
-                dispatch(listCollectionsUser());
             } else {
                 setName(user.name);
                 setEmail(user.email);
@@ -71,8 +57,6 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
         userInfo,
         user,
         success,
-        successCreate,
-        createdStory,
     ]);
 
     const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,138 +102,89 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
         }
     };
 
-    const createStoryHandler = () => {
-        dispatch(createStory());
-    }
-
     return (
         <MainLayout>
-            <Row>
-                <Col md={3}>
-                    <h2>User Profile</h2>
-                    {message && <Message variant='danger'>{message}</Message>}
-                    { }
-                    {success && <Message variant='success'>Profile Updated</Message>}
-                    {loading ? (
-                        <Loader />
-                    ) : error ? (
-                        <Message variant='danger'>{error}</Message>
-                    ) : (
-                        <Form onSubmit={submitHandler}>
-                            <Form.Group controlId='avatar'>
-                                <Form.Label>Avatar</Form.Label>
-                                <Image src={avatar} alt="Profile" roundedCircle fluid />
-                                <Form.Control
-                                    type='text'
-                                    placeholder='Enter image url'
-                                    value={avatar}
-                                    onChange={(e) => setAvatar(e.target.value)}
-                                ></Form.Control>
-                                <input
-                                    type="file"
-                                    id='image-file'
-                                    onChange={uploadFileHandler}
-                                ></input>
-                                {uploading && <Loader />}
-                            </Form.Group>
+            <h2>User Profile</h2>
+            {message && <Message variant='danger'>{message}</Message>}
+            { }
+            {success && <Message variant='success'>Profile Updated</Message>}
+            {loading ? (
+                <Loader />
+            ) : error ? (
+                <Message variant='danger'>{error}</Message>
+            ) : (
+                <Form onSubmit={submitHandler}>
+                    <Form.Group controlId='avatar'>
+                        <Form.Label>Avatar</Form.Label>
+                        <Image src={avatar} alt="Profile" roundedCircle fluid />
+                        <Form.Control
+                            type='text'
+                            placeholder='Enter image url'
+                            value={avatar}
+                            onChange={(e) => setAvatar(e.target.value)}
+                        ></Form.Control>
+                        <input
+                            type="file"
+                            id='image-file'
+                            onChange={uploadFileHandler}
+                        ></input>
+                        {uploading && <Loader />}
+                    </Form.Group>
 
-                            <Form.Group controlId='name'>
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type='name'
-                                    placeholder='Enter name'
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group>
+                    <Form.Group controlId='name'>
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                            type='name'
+                            placeholder='Enter name'
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        ></Form.Control>
+                    </Form.Group>
 
-                            <Form.Group controlId='email'>
-                                <Form.Label>Email Address</Form.Label>
-                                <Form.Control
-                                    type='email'
-                                    placeholder='Enter email'
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group>
+                    <Form.Group controlId='email'>
+                        <Form.Label>Email Address</Form.Label>
+                        <Form.Control
+                            type='email'
+                            placeholder='Enter email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        ></Form.Control>
+                    </Form.Group>
 
-                            <Form.Group controlId='password'>
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    type='password'
-                                    placeholder='Enter password'
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group>
+                    <Form.Group controlId='password'>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type='password'
+                            placeholder='Enter password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        ></Form.Control>
+                    </Form.Group>
 
-                            <Form.Group controlId='confirmPassword'>
-                                <Form.Label>Confirm Password</Form.Label>
-                                <Form.Control
-                                    type='password'
-                                    placeholder='Confirm password'
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group>
+                    <Form.Group controlId='confirmPassword'>
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                            type='password'
+                            placeholder='Confirm password'
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        ></Form.Control>
+                    </Form.Group>
 
-                            <Form.Group controlId='bio'>
-                                <Form.Label>Bio</Form.Label>
-                                <Form.Control
-                                    as='textarea'
-                                    value={bio}
-                                    onChange={(e) => setBio(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group>
+                    <Form.Group controlId='bio'>
+                        <Form.Label>Bio</Form.Label>
+                        <Form.Control
+                            as='textarea'
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
+                        ></Form.Control>
+                    </Form.Group>
 
-                            <Button type='submit' className='btn-red'>
-                                Update
-                            </Button>
-                        </Form>
-                    )}
-                </Col>
-                <Col md={9}>
-                    <h2>My Collections</h2>
-                    {loadingCollections ? (
-                        <Loader />
-                    ) : errorCollections ? (
-                        <Message variant='danger'>{errorCollections}</Message>
-                    ) : (
-                        <Table>
-                            <thead>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Num</th>
-                                <th></th>
-                            </thead>
-                            <tbody>
-                                {collections.map((collection) => (
-                                    <tr key={collection._id}>
-                                        <td>{collection._id}</td>
-                                        <td>{collection.name}</td>
-                                        <td>{collection.numStories}</td>
-                                        <td>{collection.stories[0].title}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    )}
-                </Col>
-            </Row>
-
-            <div className="create">
-                <OverlayTrigger
-                    overlay={
-                        <Tooltip>
-                            Create Story
-                        </Tooltip>
-                    }
-                >
-                    <Button className="btn-create" onClick={createStoryHandler}>
-                        <i className="fas fa-plus"></i>
+                    <Button type='submit' className='btn-red'>
+                        Update
                     </Button>
-                </OverlayTrigger>
-            </div>
+                </Form>
+            )}
         </MainLayout>
     );
 };
