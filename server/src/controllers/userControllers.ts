@@ -73,6 +73,8 @@ export const getUserProfile = asyncHandler(
                 email: user.email,
                 avatar: user.avatar,
                 isAdmin: user.isAdmin,
+                bio: user.bio,
+                points: user.points,
             });
         } else {
             throw new Error('User not found');
@@ -85,16 +87,18 @@ export const updateUserProfile = asyncHandler(
         const user = await User.findById(req.user?._id);
 
         if (user) {
-            const { name, email, password, avatar } = req.body as {
+            const { name, email, password, avatar, bio } = req.body as {
                 name?: string;
                 email?: string;
                 password?: string;
                 avatar?: string;
+                bio?: string
             };
 
             user.name = name ? name : user.name;
             user.email = email ? email : user.email;
             user.avatar = avatar ? avatar : user.avatar;
+            user.bio = bio ? bio : user.bio;
 
             if (password) user.password = password;
             const updatedUser = await user.save();
@@ -104,6 +108,7 @@ export const updateUserProfile = asyncHandler(
                 name: updatedUser.name,
                 email: updatedUser.email,
                 isAdmin: updatedUser.isAdmin,
+                bio: updatedUser.bio,
                 token: generateToken(updatedUser._id)
             });
         } else {

@@ -1,25 +1,25 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from '../types';
-import { Story } from '../models';
+import { Story, User } from '../models';
 
 export const getStories = asyncHandler(
     async (req: Request, res: Response) => {
         const keyword = req.query.keyword
-		? {
-				title: {
-					$regex: req.query.keyword,
-					$options: 'i'
-				} as any
-		  }
-		: {};
+            ? {
+                title: {
+                    $regex: req.query.keyword,
+                    $options: 'i'
+                } as any
+            }
+            : {};
         const category = req.query.category
-		? {
-				category: {
-					$regex: req.query.category,
-					$options: 'i'
-				} as any
-		  }
-		: {};
+            ? {
+                category: {
+                    $regex: req.query.category,
+                    $options: 'i'
+                } as any
+            }
+            : {};
 
         const count = await Story.countDocuments({ ...keyword, ...category });
         const stories = await Story.find({ ...keyword, ...category })
@@ -39,8 +39,8 @@ export const getStoryById = asyncHandler(
             { $inc: { views: 1 } },
             { new: true }
         )
-        .populate('author', 'name avatar')
-        .populate('reviews.user', 'name avatar')
+            .populate('author', 'name avatar')
+            .populate('reviews.user', 'name avatar')
 
         if (story) {
             res.json(story);
@@ -53,14 +53,26 @@ export const getStoryById = asyncHandler(
 
 export const createStory = asyncHandler(
     async (req: Request, res: Response) => {
+        if (!req.user) {
+            res.status(400);
+            throw new Error('User not found');
+        }
+
         const story = new Story({
-            author: req.user?._id,
+            author: req.user._id,
             title: 'Sample title',
             image: '/images/sample.jpg',
             category: 'Sample category',
             description: 'sample description',
             body: 'Sample body',
         });
+
+        const user = await User.findById(req.user._id);
+
+        if (user) {
+            user.points += 100;
+            await user.save()
+        }
 
         const createdStory = await story.save();
         res.status(201).json(createdStory);
@@ -128,7 +140,7 @@ export const deleteStory = asyncHandler(
 );
 
 export const getStoriesByAuthor = asyncHandler(
-    async(req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
         const { userId } = req.params as { userId: string };
         const stories = await Story.find({ author: userId })
 
@@ -142,14 +154,14 @@ export const createStoryReview = asyncHandler(
         const story = await Story.findById(id);
 
         if (!req.user) {
-			res.status(400);
-			throw new Error('User not found');
-		}
+            res.status(400);
+            throw new Error('User not found');
+        }
 
         const { rating, comment } = req.body as {
-			rating: number;
-			comment: string;
-		};
+            rating: number;
+            comment: string;
+        };
 
         if (story) {
             const alreadyReviewed = story.reviews.find(
@@ -157,27 +169,34 @@ export const createStoryReview = asyncHandler(
             );
 
             if (alreadyReviewed) {
-				res.status(400);
-				throw new Error('Story already reviewed');
-			}
+                res.status(400);
+                throw new Error('Story already reviewed');
+            }
 
             const review = {
-				rating,
-				comment,
-				user: req.user._id
-			};
-            
+                rating,
+                comment,
+                user: req.user._id
+            };
+
             story.reviews.push(review);
             story.numReviews = story.reviews.length;
             story.rating =
                 story.reviews.reduce((acc, item) => item.rating + acc, 0) /
                 story.reviews.length;
 
+            const user = await User.findById(req.user._id);
+
+            if (user) {
+                user.points += rating;
+                await user.save()
+            }
+
             await story.save();
             res.status(201).json({ message: 'Review Added' });
         } else {
             res.status(404);
-			throw new Error('Story not found.');
+            throw new Error('Story not found.');
         }
     }
 );
