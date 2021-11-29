@@ -24,7 +24,7 @@ router.route('/top')
 router.route('/:id')
     .put(protect, admin, updateUser)
     .delete(protect, admin, deleteUser)
-    .get(protect, admin, getUserById)
+    .get(getUserById)
 
 router.route('/login').post(login);
 

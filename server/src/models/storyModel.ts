@@ -46,6 +46,10 @@ const storySchema = new mongoose.Schema({
         required: true,
     },
     reviews: [reviewSchema],
+    numReviews: {
+        type: Number,
+        default: 0,
+    },
     rating: {
         type: Number,
         default: 0,
