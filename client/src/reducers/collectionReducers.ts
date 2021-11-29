@@ -14,6 +14,9 @@ import {
     CollectionDeleteAction,
     CollectionDeleteActionTypes,
     CollectionDeleteState,
+    CollectionDetailState,
+    CollectionDetailAction,
+    CollectionDetailActionTypes,
 } from 'types/collections';
 
 const initialAddStoryToCollectionState: CollectionAddStoryState = {
@@ -152,3 +155,33 @@ export const collectionUserReducer = (
             return state;
     }
 };
+
+const initialCollectionDetailState: CollectionDetailState = {
+    loading: false,
+};
+
+export const collectionDetailReducer = (
+    state: CollectionDetailState = initialCollectionDetailState,
+    action: CollectionDetailAction
+) => {
+    switch(action.type) {
+        case CollectionDetailActionTypes.COLLECTION_DETAIL_REQUEST:
+            return {
+                loading: true,
+                collection: initialCollectionDetailState.collection
+            };
+        case CollectionDetailActionTypes.COLLECTION_DETAIL_SUCCESS:
+            return {
+                loading: initialCollectionDetailState.loading,
+                collection: action.payload
+            };
+        case CollectionDetailActionTypes.COLLECTION_DETAIL_FAILURE:
+            return {
+                loading: initialCollectionDetailState.loading,
+                collection: initialCollectionDetailState.collection,
+                error: action.payload
+            };
+        default:
+            return state;
+    }
+}

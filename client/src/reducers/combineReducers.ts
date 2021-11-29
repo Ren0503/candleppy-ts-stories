@@ -27,6 +27,7 @@ import {
     collectionCreateReducer,
 	collectionDeleteReducer,
 	collectionUserReducer,
+	collectionDetailReducer,
 } from './collectionReducers';
 
 import { ReduxState } from 'types/ReduxState';
@@ -53,6 +54,7 @@ const reducer = combineReducers<ReduxState>({
 	collectionUser: collectionUserReducer,
 	collectionCreate: collectionCreateReducer,
 	collectionDelete: collectionDeleteReducer,
+	collectionDetail: collectionDetailReducer,
 });
 
 export default reducer;

@@ -9,6 +9,7 @@ import {
     CollectionCreateActionTypes,
     CollectionDeleteActionTypes,
     CollectionUserActionTypes,
+    CollectionDetailActionTypes,
 } from 'types/collections';
 
 export const createCollection = (name: string): AppThunk => async (dispatch, getState) => {
@@ -153,3 +154,31 @@ export const removeStoryFromCollection = (
         });
     }
 };
+
+export const detailCollection = (id: string): AppThunk => async(dispatch, getState) => {
+    try {
+        dispatch({
+            type: CollectionDetailActionTypes.COLLECTION_DETAIL_REQUEST,
+        });
+
+        const { userInfo } = getState().userLogin;
+		const config = {
+			headers: {
+				'Content-Type': 'Application/json',
+				Authorization: `Bearer ${userInfo?.token}`
+			}
+		};
+
+        const { data } = await axios.get<Collection>(`/api/collections/${id}`, config);
+
+        dispatch({
+            type: CollectionDetailActionTypes.COLLECTION_DETAIL_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: CollectionDetailActionTypes.COLLECTION_DETAIL_FAILURE,
+            payload: errorHandler(error)
+        })
+    }
+}

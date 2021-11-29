@@ -153,7 +153,7 @@ const EditScreen = ({
                     <Form.Group controlId='description'>
                         <Form.Label>Description</Form.Label>
                         <Form.Control
-                            as='text'
+                            type='text'
                             placeholder='Enter description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}

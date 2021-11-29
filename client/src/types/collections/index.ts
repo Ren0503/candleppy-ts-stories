@@ -4,3 +4,4 @@ export * from './CollectionCreate';
 export * from './CollectionDelete';
 export * from './CollectionRemove';
 export * from './CollectionUser';
+export * from './CollectionDetail';

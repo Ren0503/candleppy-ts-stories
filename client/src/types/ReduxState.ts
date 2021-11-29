@@ -26,6 +26,7 @@ import {
     CollectionUserState,
     CollectionCreateState,
 	CollectionDeleteState,
+	CollectionDetailState,
 } from './collections';
 
 export interface ReduxState {
@@ -50,4 +51,5 @@ export interface ReduxState {
 	collectionUser: CollectionUserState;
 	collectionCreate: CollectionCreateState;
 	collectionDelete: CollectionDeleteState;
+	collectionDetail: CollectionDetailState;
 }
