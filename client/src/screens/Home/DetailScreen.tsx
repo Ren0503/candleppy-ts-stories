@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createStoryReview, detailStory } from 'actions';
+import { createStoryReview, deleteStory, detailStory } from 'actions';
 import { Loader, Message } from 'components/shared';
 import { ListGroup, Row, Col, Form, Image, Button, Breadcrumb, Badge } from 'react-bootstrap';
 import { Rating, TopStories, TextToSpeech } from 'components/stories';
@@ -40,6 +40,15 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
         error: errorStoryReview,
     } = storyReviewCreate;
 
+    const storyDelete = useSelector((state: ReduxState) => state.storyDelete);
+    const {
+        loading: loadingDelete,
+        error: errorDelete,
+        success: successDelete,
+    } = storyDelete;
+
+    const isAuthor = userInfo?._id === story?.author._id ? true : false;
+
     useEffect(() => {
         if (successStoryReview) {
             dispatch({
@@ -47,18 +56,26 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
             })
         }
         dispatch(detailStory(id))
-    }, [id, dispatch, successStoryReview]);
+    }, [id, dispatch, successStoryReview, successDelete]);
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(createStoryReview(id, { rating, comment }));
     };
 
+    const deleteHandler = (id: string) => {
+        if (window.confirm('Are you sure')) {
+            dispatch(deleteStory(id));
+        }
+    };
+
     const storyDetailDisplay = () => {
-        if (loading) return <Loader />;
+        if (loading || loadingDelete) return <Loader />;
         else if (error) return <Message variant='danger'>{error}</Message>;
         else if (!story)
             return <Message variant='danger'>Product Not Found</Message>;
+        else if (errorDelete)
+            return <Message variant='danger'>{errorDelete}</Message>;
         else
             return (
                 <>
@@ -78,6 +95,12 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                                 <Row>
                                     <Col md={6}>
                                         <Badge style={{ background: "#8a2be2" }}>{story.category}</Badge>
+                                        {isAuthor && <Button
+                                            variant='danger'
+                                            className='btn-sm'
+                                            onClick={() => deleteHandler(story._id)}>
+                                            <i className='fas fa-trash'></i>
+                                        </Button>}
                                     </Col>
                                     <Col className="text-right" md={6}>
                                         <i>{story.createdAt.substring(0, 10)}</i>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getUserDetail, listCollectionsUser, updateUserProfile } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { Form, Button, Row, Col, Table, Image } from 'react-bootstrap';
 import { Message, Loader } from 'components/shared';
 import MainLayout from 'layouts/MainLayout';
 import { RouteComponentProps } from 'react-router-dom';
@@ -111,6 +111,23 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                         <Message variant='danger'>{error}</Message>
                     ) : (
                         <Form onSubmit={submitHandler}>
+                            <Form.Group controlId='avatar'>
+                                <Form.Label>Avatar</Form.Label>
+                                <Image src={avatar} alt="Profile" roundedCircle />
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter image url'
+                                    value={avatar}
+                                    onChange={(e) => setAvatar(e.target.value)}
+                                ></Form.Control>
+                                <input
+                                    type="file"
+                                    id='image-file'
+                                    onChange={uploadFileHandler}
+                                ></input>
+                                {uploading && <Loader />}
+                            </Form.Group>
+
                             <Form.Group controlId='name'>
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control
@@ -129,22 +146,6 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 ></Form.Control>
-                            </Form.Group>
-
-                            <Form.Group controlId='avatar'>
-                                <Form.Label>Avatar</Form.Label>
-                                <Form.Control
-                                    type='text'
-                                    placeholder='Enter image url'
-                                    value={avatar}
-                                    onChange={(e) => setAvatar(e.target.value)}
-                                ></Form.Control>
-                                <input
-                                    type="file"
-                                    id='image-file'
-                                    onChange={uploadFileHandler}
-                                ></input>
-                                {uploading && <Loader />}
                             </Form.Group>
 
                             <Form.Group controlId='password'>
@@ -177,7 +178,7 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                     <h2>My Collections</h2>
                     {loadingCollections ? (
                         <Loader />
-                    ): errorCollections ? (
+                    ) : errorCollections ? (
                         <Message variant='danger'>{errorCollections}</Message>
                     ) : (
                         <Table>

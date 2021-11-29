@@ -150,7 +150,7 @@ const EditScreen = ({
                         </Form.Control>
                     </Form.Group>
 
-                    <Form.Group controlId='category'>
+                    <Form.Group controlId='description'>
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                             as='text'

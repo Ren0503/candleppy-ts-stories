@@ -59,7 +59,7 @@ const LoginScreen = ({ location: { search }, history }: LoginScreenProps) => {
                     ></Form.Control>
                 </Form.Group>
 
-                <Button type='submit' variant='primary'>
+                <Button type='submit' className="btn-red">
                     Sign In
                 </Button>
 
