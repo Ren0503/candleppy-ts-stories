@@ -7,6 +7,7 @@ import {
     userListReducer,
 	userDeleteReducer,
 	userUpdateReducer,
+	userTopReducer,
 } from './userReducers';
 
 import {
@@ -38,6 +39,7 @@ const reducer = combineReducers<ReduxState>({
 	userList: userListReducer,
 	userDelete: userDeleteReducer,
 	userUpdate: userUpdateReducer,
+	userTop: userTopReducer,
     storyList: storyListReducer,
 	storyDetail: storyDetailReducer,
 	storyDelete: storyDeleteReducer,

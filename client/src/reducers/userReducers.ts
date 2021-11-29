@@ -19,7 +19,10 @@ import {
     UserDeleteActionTypes,
     UserUpdateState,
     UserUpdateAction,
-    UserUpdateActionTypes
+    UserUpdateActionTypes,
+	UserTopState,
+	UserTopAction,
+	UserTopActionTypes,
 } from 'types/users';
 
 const userLoginReducerInitialState: UserLoginState = {
@@ -212,6 +215,36 @@ export const userDeleteReducer = (
 		case UserDeleteActionTypes.USER_DELETE_FAILURE:
 			return {
 				loading: userDeleteReducerInitialState.loading,
+				error: action.payload
+			};
+		default:
+			return state;
+	}
+};
+
+const initialUserTopState: UserTopState = {
+	users: [],
+	loading: false,
+};
+
+export const userTopReducer = (
+	state: UserTopState = initialUserTopState,
+	action: UserTopAction
+) => {
+	switch(action.type) {
+		case UserTopActionTypes.USER_TOP_REQUEST:
+			return {
+				loading: true,
+				users: initialUserTopState.users
+			};
+		case UserTopActionTypes.USER_TOP_SUCCESS:
+			return {
+				loading: initialUserTopState.loading,
+				users: action.payload,
+			};
+		case UserTopActionTypes.USER_TOP_FAILURE:
+			return {
+				users: initialUserTopState.users,
 				error: action.payload
 			};
 		default:

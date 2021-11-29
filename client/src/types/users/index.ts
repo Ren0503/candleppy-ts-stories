@@ -6,3 +6,4 @@ export * from './UserList';
 export * from './UserDetails';
 export * from './UserUpdate';
 export * from './UserDelete';
+export * from './UserTop';

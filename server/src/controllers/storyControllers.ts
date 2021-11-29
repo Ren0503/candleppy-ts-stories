@@ -142,7 +142,7 @@ export const deleteStory = asyncHandler(
 export const getStoriesByAuthor = asyncHandler(
     async (req: Request, res: Response) => {
         const { userId } = req.params as { userId: string };
-        const stories = await Story.find({ author: userId })
+        const stories = await Story.find({ author: userId }).populate('author', 'name avatar bio')
 
         res.json(stories);
     }
@@ -203,7 +203,7 @@ export const createStoryReview = asyncHandler(
 
 export const getTopStories = asyncHandler(
     async (req: Request, res: Response) => {
-        const stories = await Story.find({}).sort({ views: -1 }).limit(5);
+        const stories = await Story.find({}).sort({ rating: -1 }).limit(5);
 
         res.json(stories);
     }

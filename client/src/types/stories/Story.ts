@@ -5,6 +5,7 @@ export interface Story {
         _id: string;
         name: string;
         avatar: string;
+        bio?:string;
     };
     image: string;
     description: string;

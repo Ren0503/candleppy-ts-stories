@@ -17,6 +17,7 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [bio, setBio] = useState('');
     const [message, setMessage] = useState<string>();
     const [updateMessage, setUpdateMessage] = useState<boolean>(false);
     const [avatar, setAvatar] = useState<string>('');
@@ -51,6 +52,7 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                 setName(user.name);
                 setEmail(user.email);
                 setAvatar(user.avatar);
+                setBio(user.bio)
             }
         }
     }, [dispatch, history, userInfo, user, success]);
@@ -91,7 +93,8 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                     email,
                     avatar,
                     isAdmin: user.isAdmin,
-                    password
+                    password,
+                    bio,
                 })
             );
         }
@@ -113,7 +116,7 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='avatar'>
                                 <Form.Label>Avatar</Form.Label>
-                                <Image src={avatar} alt="Profile" roundedCircle />
+                                <Image src={avatar} alt="Profile" roundedCircle fluid />
                                 <Form.Control
                                     type='text'
                                     placeholder='Enter image url'
@@ -165,6 +168,15 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                                     placeholder='Confirm password'
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
+
+                            <Form.Group controlId='bio'>
+                                <Form.Label>Bio</Form.Label>
+                                <Form.Control
+                                    as='textarea'
+                                    value={bio}
+                                    onChange={(e) => setBio(e.target.value)}
                                 ></Form.Control>
                             </Form.Group>
 

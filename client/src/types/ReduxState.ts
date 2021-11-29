@@ -6,6 +6,7 @@ import {
 	UserUpdateProfileState,
     UserUpdateState,
 	UserDeleteState,
+	UserTopState,
 } from './users';
 
 import {
@@ -32,6 +33,7 @@ export interface ReduxState {
 	userRegister: UserRegisterState;
 	userDetail: UserDetailState;
 	userUpdateProfile: UserUpdateProfileState;
+	userTop: UserTopState;
 	userList: UserListState;
 	userDelete: UserDeleteState;
 	userUpdate: UserUpdateState;
