@@ -104,3 +104,15 @@
 .btn-voice-danger {
     background-color: #f43547;
 }
+
+.create {
+    position: absolute;
+    right: 5%;
+}
+
+.btn-create {
+    border-radius: 50%;
+    padding: 10px 15px;
+    background-color: #af0404;
+    border: none;
+}

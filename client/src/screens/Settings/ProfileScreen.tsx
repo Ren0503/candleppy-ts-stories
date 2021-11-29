@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getUserDetail, listCollectionsUser, updateUserProfile } from 'actions';
+import { createStory, getUserDetail, listCollectionsUser, updateUserProfile } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Row, Col, Table, Image } from 'react-bootstrap';
+import { Form, Button, Row, Col, Table, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Message, Loader } from 'components/shared';
 import MainLayout from 'layouts/MainLayout';
 import { RouteComponentProps } from 'react-router-dom';
@@ -37,10 +37,20 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
     const collectionUser = useSelector((state: ReduxState) => state.collectionUser)
     const { collections, loading: loadingCollections, error: errorCollections } = collectionUser;
 
+    const storyCreate = useSelector((state: ReduxState) => state.storyCreate)
+    const {
+        success: successCreate,
+        story: createdStory,
+        loading: loadingCreate,
+        error: errorCreate
+    } = storyCreate;
+
     useEffect(() => {
         if (!userInfo) {
             history.push('/login');
         } else {
+            if (successCreate && createdStory)
+                history.push(`/story/${createdStory._id}/edit`)
             if (success) {
                 setUpdateMessage(true);
             }
@@ -55,7 +65,15 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                 setBio(user.bio)
             }
         }
-    }, [dispatch, history, userInfo, user, success]);
+    }, [
+        dispatch,
+        history,
+        userInfo,
+        user,
+        success,
+        successCreate,
+        createdStory,
+    ]);
 
     const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0];
@@ -99,6 +117,10 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
             );
         }
     };
+
+    const createStoryHandler = () => {
+        dispatch(createStory());
+    }
 
     return (
         <MainLayout>
@@ -214,6 +236,20 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                     )}
                 </Col>
             </Row>
+
+            <div className="create">
+                <OverlayTrigger
+                    overlay={
+                        <Tooltip>
+                            Create Story
+                        </Tooltip>
+                    }
+                >
+                    <Button className="btn-create" onClick={createStoryHandler}>
+                        <i className="fas fa-plus"></i>
+                    </Button>
+                </OverlayTrigger>
+            </div>
         </MainLayout>
     );
 };

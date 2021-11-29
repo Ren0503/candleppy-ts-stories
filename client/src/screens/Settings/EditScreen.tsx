@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { detailStory, updateStory } from 'actions/storyActions';
 import { Loader, Message } from 'components/shared';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from 'layouts/MainLayout';
 import ReactQuill from 'react-quill';
@@ -154,12 +154,14 @@ const EditScreen = ({
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                             as='text'
+                            placeholder='Enter description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         ></Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId='image'>
+                        <Image src={image} alt="Image" fluid />
                         <Form.Label>Image</Form.Label>
                         <Form.Control
                             type='text'
