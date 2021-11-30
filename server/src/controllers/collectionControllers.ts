@@ -102,7 +102,7 @@ export const deleteCollection = asyncHandler(
 
         if (!collection) {
             res.status(404);
-            throw new Error('Story not found.');
+            throw new Error('Collection not found.');
         }
 
         if (collection.user.toString() !== req.user?._id.toString()) {

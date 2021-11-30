@@ -3,7 +3,7 @@ import { createCollection, createStory, listCollectionsUser } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Message, Loader } from 'components/shared';
 import { MainLayout } from 'layouts';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { Story } from 'components/stories';
@@ -117,7 +117,9 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
 
                     {collections.map((collection) => (
                         <>
-                            <h3>{collection.name}: {collection.numStories} stories </h3>
+                            <Link to={`/collection/${collection._id}`}>
+                                <h3 className="title">{collection.name}: {collection.numStories} stories </h3>
+                            </Link>
                             <Row>
                                 {collection.stories.map((story) => (
                                     <Col key={story._id} sm={12} md={6} lg={3}>

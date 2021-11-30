@@ -54,7 +54,7 @@ export const deleteCollection = (id: string): AppThunk => async (dispatch, getSt
             }
         };
 
-        await axios.delete(`/api/collection/${id}/`, config);
+        await axios.delete(`/api/collections/${id}/`, config);
 
         dispatch({
             type: CollectionDeleteActionTypes.COLLECTION_DELETE_SUCCESS

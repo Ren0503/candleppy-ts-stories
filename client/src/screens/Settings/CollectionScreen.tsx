@@ -45,7 +45,7 @@ const CollectionScreen = ({
     const { loading: loadingRemove, error: errorRemove, success: successRemove } = collectionRemoveStory;
 
     useEffect(() => {
-        if (!userInfo || userInfo !== collection?.user) {
+        if (!userInfo) {
             history.push('/login');
         } else {
             dispatch(detailCollection(id));
@@ -53,7 +53,13 @@ const CollectionScreen = ({
             setAvatar(userInfo.avatar);
             setBio(userInfo.bio)
         }
-    }, [id, dispatch, userInfo, successDelete, successRemove]);
+    }, [
+        id,
+        dispatch,
+        userInfo,
+        successDelete,
+        successRemove
+    ]);
 
     const deleteHandler = (id: string) => {
         if (window.confirm('Are you sure')) {
@@ -97,10 +103,10 @@ const CollectionScreen = ({
                             <Button
                                 className='btn-red text-right'
                                 onClick={() => deleteHandler(collection._id)}>
-                                <i className='fas fa-trash'></i>
+                                <i className='fas fa-trash'></i> Delete Collection
                             </Button>
 
-                            {collection.stories.map((story) => {
+                            {collection.stories.map((story) => (
                                 <Row>
                                     <Col md={3}>
                                         <Image src={story.image} alt="Thumbnail" fluid />
@@ -122,7 +128,7 @@ const CollectionScreen = ({
                                         </Button>
                                     </Col>
                                 </Row>
-                            })}
+                            ))}
                         </Col>
                     </Row>
                 </>

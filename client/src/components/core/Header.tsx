@@ -42,8 +42,8 @@ const Header = () => {
                             <>
                                 <Image src={userInfo.avatar} width="40" height="40" roundedCircle />
                                 <NavDropdown title={userInfo.name} id='username'>
-                                    <Link to='/my_stories'>
-                                        <NavDropdown.Item href="/my_stories">My Stories</NavDropdown.Item>
+                                    <Link to='/dashboard'>
+                                        <NavDropdown.Item href="/dashboard">My Dashboard</NavDropdown.Item>
                                     </Link>
                                     <Link to='/profile'>
                                         <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

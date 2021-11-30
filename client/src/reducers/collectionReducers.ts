@@ -168,7 +168,6 @@ export const collectionDetailReducer = (
         case CollectionDetailActionTypes.COLLECTION_DETAIL_REQUEST:
             return {
                 loading: true,
-                collection: initialCollectionDetailState.collection
             };
         case CollectionDetailActionTypes.COLLECTION_DETAIL_SUCCESS:
             return {
@@ -178,7 +177,6 @@ export const collectionDetailReducer = (
         case CollectionDetailActionTypes.COLLECTION_DETAIL_FAILURE:
             return {
                 loading: initialCollectionDetailState.loading,
-                collection: initialCollectionDetailState.collection,
                 error: action.payload
             };
         default:
