@@ -53,9 +53,14 @@ const AddStoryScreen = ({
         successAdd,
     ]);
 
-    const addStoryHandler = (collectionId: string, _id = storyId) => {
-        dispatch(addStoryToCollection(collectionId, { _id }));
+    const addStoryHandler = (collectionId: string, storyId: string) => {
+        const story = {
+            _id: storyId
+        }
+        dispatch(addStoryToCollection(collectionId, story));
     };
+
+    console.log(chooseCollection);
 
     const addStoryDisplay = () => {
         if (loading) return <Loader />;
@@ -65,23 +70,21 @@ const AddStoryScreen = ({
                 <>
                     <h2>Choose Collections</h2>
 
-                    <Form.Group controlId='collection' className="select-collection">
-                        <Form.Label>My Collections</Form.Label>
-                        <Form.Control
-                            as='select'
-                            value={chooseCollection}
-                            onChange={(e) => setChooseCollection(e.target.value)}
-                        >
-                            {collections.map((collection) => (
-                                <option key={collection._id} value={collection.name}>{collection.name}</option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
+                    <select
+                        name="collection"
+                        id="collectionId"
+                        value={chooseCollection}
+                        onChange={(e) => setChooseCollection(e.target.value)}
+                    >
+                        {collections.map((collection) => (
+                            <option key={collection._id} value={collection._id}>{collection.name}</option>
+                        ))}
+                    </select>
 
                     <Button
                         type="button"
                         className="btn-create"
-                        onClick={() => addStoryHandler(chooseCollection)}
+                        onClick={() => addStoryHandler(chooseCollection, storyId)}
                         disabled={!chooseCollection}
                     >
                         <i className="fas fa-plus"></i>

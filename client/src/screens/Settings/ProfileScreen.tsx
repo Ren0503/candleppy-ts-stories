@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getUserDetail, updateUserProfile } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Image } from 'react-bootstrap';
+import { Form, Button, Image, Row, Col } from 'react-bootstrap';
 import { Message, Loader } from 'components/shared';
 import { MainLayout } from 'layouts';
 import { RouteComponentProps } from 'react-router-dom';
@@ -113,77 +113,81 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
-                <Form onSubmit={submitHandler}>
-                    <Form.Group controlId='avatar'>
-                        <Form.Label>Avatar</Form.Label>
-                        <Image src={avatar} alt="Profile" roundedCircle fluid />
-                        <Form.Control
-                            type='text'
-                            placeholder='Enter image url'
-                            value={avatar}
-                            onChange={(e) => setAvatar(e.target.value)}
-                        ></Form.Control>
-                        <input
-                            type="file"
-                            id='image-file'
-                            onChange={uploadFileHandler}
-                        ></input>
-                        {uploading && <Loader />}
-                    </Form.Group>
+                <Row className="justify-content-md-center">
+                    <Col xs={12} md={6}>
+                        <Form onSubmit={submitHandler}>
+                            <Form.Group controlId='avatar'>
+                                <Form.Label>Avatar</Form.Label>
+                                <Image src={avatar} alt="Profile" roundedCircle fluid />
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter image url'
+                                    value={avatar}
+                                    onChange={(e) => setAvatar(e.target.value)}
+                                ></Form.Control>
+                                <input
+                                    type="file"
+                                    id='image-file'
+                                    onChange={uploadFileHandler}
+                                ></input>
+                                {uploading && <Loader />}
+                            </Form.Group>
 
-                    <Form.Group controlId='name'>
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            type='name'
-                            placeholder='Enter name'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
+                            <Form.Group controlId='name'>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control
+                                    type='name'
+                                    placeholder='Enter name'
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
 
-                    <Form.Group controlId='email'>
-                        <Form.Label>Email Address</Form.Label>
-                        <Form.Control
-                            type='email'
-                            placeholder='Enter email'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
+                            <Form.Group controlId='email'>
+                                <Form.Label>Email Address</Form.Label>
+                                <Form.Control
+                                    type='email'
+                                    placeholder='Enter email'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
 
-                    <Form.Group controlId='password'>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type='password'
-                            placeholder='Enter password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
+                            <Form.Group controlId='password'>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type='password'
+                                    placeholder='Enter password'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
 
-                    <Form.Group controlId='confirmPassword'>
-                        <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            type='password'
-                            placeholder='Confirm password'
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
+                            <Form.Group controlId='confirmPassword'>
+                                <Form.Label>Confirm Password</Form.Label>
+                                <Form.Control
+                                    type='password'
+                                    placeholder='Confirm password'
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
 
-                    <Form.Group controlId='bio'>
-                        <Form.Label>Bio</Form.Label>
-                        <Form.Control
-                            as='textarea'
-                            value={bio}
-                            onChange={(e) => setBio(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
+                            <Form.Group controlId='bio'>
+                                <Form.Label>Bio</Form.Label>
+                                <Form.Control
+                                    as='textarea'
+                                    value={bio}
+                                    onChange={(e) => setBio(e.target.value)}
+                                ></Form.Control>
+                            </Form.Group>
 
-                    <Button type='submit' className='btn-red'>
-                        Update
-                    </Button>
-                </Form>
+                            <Button type='submit' className='btn-red'>
+                                Update
+                            </Button>
+                        </Form>
+                    </Col>
+                </Row>
             )}
         </MainLayout>
     );

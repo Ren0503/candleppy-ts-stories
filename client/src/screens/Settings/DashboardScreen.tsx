@@ -24,7 +24,6 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
     const [nameCol, setNameCol] = useState<string>('');
 
     const [name, setName] = useState<string>('');
-    const [bio, setBio] = useState<string>('');
     const [avatar, setAvatar] = useState<string>('');
 
     const dispatch = useDispatch<AppDispatch>();
@@ -63,7 +62,6 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
             dispatch(listCollectionsUser());
             setName(userInfo.name);
             setAvatar(userInfo.avatar);
-            setBio(userInfo.bio)
         }
     }, [
         dispatch,
@@ -77,7 +75,7 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createCollection(nameCol);
+        dispatch(createCollection(nameCol));
     };
 
     const createStoryHandler = () => {
@@ -96,26 +94,25 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
         else
             return (
                 <>
-                    <div className="author">
-                        <Card className="text-center">
-                            <Image src={avatar} alt="Profile" roundedCircle fluid />
-
-                            <Card.Title as="h6">
-                                <strong>{name}</strong>
-                            </Card.Title>
-
-                            <i>{bio}</i>
-                        </Card>
+                    <div className="author-bg">
+                        <div className="author">
+                            <Image className="ml-3" src={avatar} width="170" alt="Avatar" roundedCircle />
+                            <h5>{name}</h5>
+                        </div>
                     </div>
 
                     <Form onSubmit={submitHandler}>
                         <Form.Control
                             type='text'
                             name='nameCol'
+                            value={nameCol}
                             onChange={(e) => setNameCol(e.target.value)}
                             placeholder='Create collection...'
                             className='mr-sm-2 ml-sm-5'
                         ></Form.Control>
+                        <Button type="submit">
+                            <i className="fas fa-plus"></i>
+                        </Button>
                     </Form>
 
                     {collections.map((collection) => (

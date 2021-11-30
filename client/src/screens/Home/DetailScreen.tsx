@@ -69,6 +69,10 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
         }
     };
 
+    const addToCollection = () => {
+        history.push(`/add/${id}`);
+    }
+
     const storyDetailDisplay = () => {
         if (loading || loadingDelete) return <Loader />;
         else if (error) return <Message variant='danger'>{error}</Message>;
@@ -196,6 +200,13 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                             </div>
                         </Col>
                         <Col md={3}>
+                            <Button
+                                onClick={addToCollection}
+                                disabled={!userInfo}
+                                className='btn btn-red'
+                                type='button'>
+                                Add To Collection
+                            </Button>
                             <TopStories />
                         </Col>
                     </Row>

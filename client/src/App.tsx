@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'styles/layout.css';
 import AuthRoutes from 'routes/AuthRoutes';
-import MainRoutes from 'routes/MainRoutes';
+import HomeRoutes from 'routes/HomeRoutes';
 import { ScrollToTop } from 'components/shared';
+import SettingRoutes from 'routes/SettingRoutes';
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <AuthRoutes />
-        <MainRoutes />
+        <HomeRoutes />
+        <SettingRoutes />
       </Router>
     </div>
   )

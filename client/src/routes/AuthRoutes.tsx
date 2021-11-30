@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import LoginScreen from 'screens/Auth/LoginScreen';
-import RegisterScreen from 'screens/Auth/RegisterScreen';
+import {
+    LoginScreen,
+    RegisterScreen,
+} from 'screens/Auth';
 
 const AuthRoutes = () => {
     return (

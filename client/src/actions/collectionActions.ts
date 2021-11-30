@@ -74,12 +74,12 @@ export const listCollectionsUser = (): AppThunk => async (dispatch, getState) =>
         });
 
         const { userInfo } = getState().userLogin;
-		const config = {
-			headers: {
-				'Content-Type': 'Application/json',
-				Authorization: `Bearer ${userInfo?.token}`
-			}
-		};
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+                Authorization: `Bearer ${userInfo?.token}`
+            }
+        };
 
         const { data } = await axios.get<Collection[]>(`/api/collections/my_collections`, config);
 
@@ -105,14 +105,14 @@ export const addStoryToCollection = (
         });
 
         const { userInfo } = getState().userLogin;
-		const config = {
-			headers: {
-				'Content-Type': 'Application/json',
-				Authorization: `Bearer ${userInfo?.token}`
-			}
-		};
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+                Authorization: `Bearer ${userInfo?.token}`
+            }
+        };
 
-        await axios.post(`/api/collections/${collectionId}/add`, story, config);
+        await axios.post(`/api/collections/${collectionId}/add`, { story }, config);
 
         dispatch({
             type: CollectionAddStoryActionTypes.COLLECTION_ADD_STORY_SUCCESS
@@ -135,12 +135,12 @@ export const removeStoryFromCollection = (
         });
 
         const { userInfo } = getState().userLogin;
-		const config = {
-			headers: {
-				'Content-Type': 'Application/json',
-				Authorization: `Bearer ${userInfo?.token}`
-			}
-		};
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+                Authorization: `Bearer ${userInfo?.token}`
+            }
+        };
 
         await axios.delete(`/api/collections/${collectionId}/remove/${storyId}`, config);
 
@@ -155,19 +155,19 @@ export const removeStoryFromCollection = (
     }
 };
 
-export const detailCollection = (id: string): AppThunk => async(dispatch, getState) => {
+export const detailCollection = (id: string): AppThunk => async (dispatch, getState) => {
     try {
         dispatch({
             type: CollectionDetailActionTypes.COLLECTION_DETAIL_REQUEST,
         });
 
         const { userInfo } = getState().userLogin;
-		const config = {
-			headers: {
-				'Content-Type': 'Application/json',
-				Authorization: `Bearer ${userInfo?.token}`
-			}
-		};
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+                Authorization: `Bearer ${userInfo?.token}`
+            }
+        };
 
         const { data } = await axios.get<Collection>(`/api/collections/${id}`, config);
 
