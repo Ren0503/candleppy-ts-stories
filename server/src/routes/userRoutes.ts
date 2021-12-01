@@ -8,7 +8,6 @@ import {
     deleteUser,
     getUserById,
     updateUser,
-    getTopUser
 } from '../controllers';
 import { admin, protect } from '../middleware';
 
@@ -17,9 +16,6 @@ const router = Router();
 router.route('/profile')
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile)
-
-router.route('/top')
-    .get(getTopUser)
 
 router.route('/:id')
     .put(protect, admin, updateUser)

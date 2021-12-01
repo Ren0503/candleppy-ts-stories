@@ -5,7 +5,6 @@ export interface User {
     avatar: string;
     isAdmin: boolean;
     bio: string;
-    points?: number;
 }
 
 export interface TokenUser extends User {

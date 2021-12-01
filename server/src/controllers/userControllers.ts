@@ -74,7 +74,6 @@ export const getUserProfile = asyncHandler(
                 avatar: user.avatar,
                 isAdmin: user.isAdmin,
                 bio: user.bio,
-                points: user.points,
             });
         } else {
             throw new Error('User not found');
@@ -115,16 +114,6 @@ export const updateUserProfile = asyncHandler(
             res.status(404);
             throw new Error('User not found');
         }
-    }
-);
-
-export const getTopUser = asyncHandler(
-    async (req: Request, res: Response) => {
-        const users = await User.find({})
-            .select('-password')
-            .sort({ points: -1 })
-            .limit(5)
-        res.json(users);
     }
 );
 

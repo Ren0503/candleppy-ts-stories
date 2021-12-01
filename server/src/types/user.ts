@@ -7,7 +7,6 @@ export interface User {
     avatar: string;
     isAdmin?: boolean;
     bio?: string;
-    points: number;
 }
 
 export interface UserDocument extends User, Document {

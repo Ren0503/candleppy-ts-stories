@@ -67,13 +67,6 @@ export const createStory = asyncHandler(
             body: 'Sample body',
         });
 
-        const user = await User.findById(req.user._id);
-
-        if (user) {
-            user.points += 100;
-            await user.save()
-        }
-
         const createdStory = await story.save();
         res.status(201).json(createdStory);
     }
@@ -184,13 +177,6 @@ export const createStoryReview = asyncHandler(
             story.rating =
                 story.reviews.reduce((acc, item) => item.rating + acc, 0) /
                 story.reviews.length;
-
-            const user = await User.findById(req.user._id);
-
-            if (user) {
-                user.points += rating;
-                await user.save()
-            }
 
             await story.save();
             res.status(201).json({ message: 'Review Added' });

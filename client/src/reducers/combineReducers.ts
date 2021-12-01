@@ -1,30 +1,29 @@
 import { combineReducers } from 'redux';
 import {
-    userLoginReducer,
+	userLoginReducer,
 	userRegisterReducer,
 	userDetailReducer,
 	userUpdateProfileReducer,
-    userListReducer,
+	userListReducer,
 	userDeleteReducer,
 	userUpdateReducer,
-	userTopReducer,
 } from './userReducers';
 
 import {
 	storyListReducer,
 	storyDetailReducer,
-    storyDeleteReducer,
+	storyDeleteReducer,
 	storyCreateReducer,
 	storyUpdateReducer,
-    storyTopRatedReducer,
+	storyTopRatedReducer,
 	storyCreateReviewReducer,
 	storyAuthorReducer,
 } from './storyReducers';
 
 import {
-    collectionAddStoryReducer,
+	collectionAddStoryReducer,
 	collectionRemoveStoryReducer,
-    collectionCreateReducer,
+	collectionCreateReducer,
 	collectionDeleteReducer,
 	collectionUserReducer,
 	collectionDetailReducer,
@@ -33,15 +32,14 @@ import {
 import { ReduxState } from 'types/ReduxState';
 
 const reducer = combineReducers<ReduxState>({
-    userLogin: userLoginReducer,
+	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
 	userDetail: userDetailReducer,
 	userUpdateProfile: userUpdateProfileReducer,
 	userList: userListReducer,
 	userDelete: userDeleteReducer,
 	userUpdate: userUpdateReducer,
-	userTop: userTopReducer,
-    storyList: storyListReducer,
+	storyList: storyListReducer,
 	storyDetail: storyDetailReducer,
 	storyDelete: storyDeleteReducer,
 	storyCreate: storyCreateReducer,

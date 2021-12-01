@@ -13,7 +13,6 @@ import {
     UserListActionTypes,
     UserDeleteActionTypes,
     UserUpdateActionTypes,
-	UserTopActionTypes,
 } from 'types/users';
 
 export const login = (email: string, password: string): AppThunk => async (
@@ -245,21 +244,3 @@ export const updateUser = (user: User): AppThunk => async (
 		});
 	}
 };
-
-export const listTopUsers = (): AppThunk => async(dispatch) => {
-	try {
-		dispatch({ type: UserTopActionTypes.USER_TOP_REQUEST });
-
-		const { data } = await axios.get<User>(`/api/users/top`);
-
-		dispatch({
-			type: UserTopActionTypes.USER_TOP_SUCCESS,
-			payload: data
-		});
-	} catch (error) {
-		dispatch({
-			type: UserTopActionTypes.USER_TOP_FAILURE,
-			payload: errorHandler(error)
-		});
-	}
-}

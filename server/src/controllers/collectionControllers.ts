@@ -86,10 +86,14 @@ export const removeStoryToCollection = asyncHandler(
                 if (!alreadyStory) {
                     res.status(404);
                     throw new Error('Story not found in collection');
-                }
+                } else {
+                    await Collection.findOneAndUpdate({ _id: id }, { $pull: { stories: alreadyStory._id } });
 
-                await Collection.findOneAndUpdate({ _id: id }, { $pull: { stories: alreadyStory._id } });
-                res.json({ message: 'Store removed' });
+                    collection.numStories = collection.stories.length;
+                    await collection.save();
+
+                    res.json({ message: 'Store removed' });
+                }
             }
         }
     }
