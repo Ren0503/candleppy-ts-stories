@@ -14,6 +14,7 @@ import { ReduxState } from 'types/ReduxState';
 import { logout } from 'actions';
 import { AppDispatch } from 'store';
 import logo from 'assets/header.png';
+import { HomeIcon, LogoutIcon, UserIcon } from 'components/icons';
 
 const Header = () => {
     const history = useHistory();
@@ -43,13 +44,17 @@ const Header = () => {
                                 <Image src={userInfo.avatar} width="40" height="40" roundedCircle />
                                 <NavDropdown title={userInfo.name} id='username'>
                                     <Link to='/dashboard'>
-                                        <NavDropdown.Item href="/dashboard">My Dashboard</NavDropdown.Item>
+                                        <NavDropdown.Item href="/dashboard">
+                                            <HomeIcon /> My Dashboard
+                                        </NavDropdown.Item>
                                     </Link>
                                     <Link to='/profile'>
-                                        <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                                        <NavDropdown.Item href="/profile">
+                                            <UserIcon /> Profile
+                                        </NavDropdown.Item>
                                     </Link>
                                     <NavDropdown.Item onClick={logoutHandler}>
-                                        Logout
+                                        <LogoutIcon /> Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </>

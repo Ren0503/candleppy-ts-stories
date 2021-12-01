@@ -7,6 +7,7 @@ import {
     EditScreen, 
     ProfileScreen 
 } from 'screens/Settings';
+import "styles/profile.css";
 
 const SettingRoutes = () => {
     return (

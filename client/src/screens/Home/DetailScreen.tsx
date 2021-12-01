@@ -9,6 +9,7 @@ import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { MainLayout } from 'layouts';
 import { StoryCreateReviewActionTypes } from 'types/stories';
+import { AddIcon } from 'components/icons';
 
 interface MatchParams {
     id: string;
@@ -205,7 +206,7 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                                 disabled={!userInfo}
                                 className='btn btn-red'
                                 type='button'>
-                                Add To Collection
+                                <AddIcon /> Add To Collection
                             </Button>
                             <TopStories />
                         </Col>

@@ -117,7 +117,6 @@ const ProfileScreen = ({ history }: ProfileScreenProps) => {
                     <Col xs={12} md={6}>
                         <Form onSubmit={submitHandler}>
                             <Form.Group controlId='avatar'>
-                                <Form.Label>Avatar</Form.Label>
                                 <Image src={avatar} alt="Profile" roundedCircle fluid />
                                 <Form.Control
                                     type='text'

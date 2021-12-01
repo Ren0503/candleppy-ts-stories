@@ -17,6 +17,7 @@ import {
     Tooltip,
     Card
 } from 'react-bootstrap';
+import { CollectionIcon, CreateIcon } from 'components/icons';
 
 interface DashboardScreenProps extends RouteComponentProps { }
 
@@ -101,22 +102,21 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
                         </div>
                     </div>
 
-                    <Form onSubmit={submitHandler}>
+                    <Form onSubmit={submitHandler} className="collection-create">
                         <Form.Control
                             type='text'
                             name='nameCol'
                             value={nameCol}
                             onChange={(e) => setNameCol(e.target.value)}
                             placeholder='Create collection...'
-                            className='mr-sm-2 ml-sm-5'
                         ></Form.Control>
                         <Button type="submit">
-                            <i className="fas fa-plus"></i>
+                            <CollectionIcon />
                         </Button>
                     </Form>
 
                     {collections.map((collection) => (
-                        <>
+                        <div className="mt-3">
                             <Link to={`/collection/${collection._id}`}>
                                 <h3 className="title">{collection.name}: {collection.numStories} stories </h3>
                             </Link>
@@ -127,7 +127,7 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
                                     </Col>
                                 ))}
                             </Row>
-                        </>
+                        </div>
                     ))}
 
                     <div className="create">
@@ -139,7 +139,7 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
                             }
                         >
                             <Button className="btn-create" onClick={createStoryHandler}>
-                                <i className="fas fa-plus"></i>
+                                <CreateIcon />
                             </Button>
                         </OverlayTrigger>
                     </div>

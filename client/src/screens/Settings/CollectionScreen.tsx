@@ -14,6 +14,7 @@ import {
     Card,
     Badge
 } from 'react-bootstrap';
+import { RemoveIcon, TrashIcon, ViewIcon } from 'components/icons';
 
 interface MatchParams {
     id: string;
@@ -86,7 +87,7 @@ const CollectionScreen = ({
                 <>
                     <Row>
                         <Col md={3}>
-                            <Card className="text-center">
+                            <Card className="text-center profile">
                                 <Image src={avatar} alt="Profile" roundedCircle fluid />
 
                                 <Card.Title as="h6">
@@ -97,22 +98,30 @@ const CollectionScreen = ({
                             </Card>
                         </Col>
                         <Col md={9}>
-                            <h3>{collection.name}</h3>
-                            <p className="text-right">Number: {collection.numStories}</p>
+                            <div className="name">
+                                <h3>{collection.name} ({collection.numStories})</h3>
 
-                            <Button
-                                className='btn-red text-right'
-                                onClick={() => deleteHandler(collection._id)}>
-                                <i className='fas fa-trash'></i> Delete Collection
-                            </Button>
+                                <Button
+                                    className='btn-red text-right'
+                                    onClick={() => deleteHandler(collection._id)}>
+                                    <TrashIcon /> Delete Collection
+                                </Button>
+                            </div>
 
                             {collection.stories.map((story) => (
-                                <Row>
+                                <Row className="story-list">
                                     <Col md={3}>
                                         <Image src={story.image} alt="Thumbnail" fluid />
                                     </Col>
                                     <Col md={9}>
-                                        <Badge>{story.category}</Badge>
+                                        <div>
+                                            <Badge>{story.category}</Badge>
+                                            <Button
+                                                className='btn-red text-right'
+                                                onClick={() => removeHandler(collection._id, story._id)}>
+                                                <RemoveIcon />
+                                            </Button>
+                                        </div>
 
                                         <h6>{story.title}</h6>
 
@@ -121,11 +130,8 @@ const CollectionScreen = ({
                                             : <p>story.description</p>
                                         }
 
-                                        <Button
-                                            className='btn-red text-right'
-                                            onClick={() => removeHandler(collection._id, story._id)}>
-                                            <i className='fas fa-trash'></i>
-                                        </Button>
+                                        <ViewIcon /> {story.views} {" "}
+                                        <i className="fas fa-comment"></i> {story.numReviews}
                                     </Col>
                                 </Row>
                             ))}

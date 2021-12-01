@@ -1,3 +1,4 @@
+import { ViewIcon } from 'components/icons';
 import React, { FunctionComponent } from 'react';
 import { Card, Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -31,7 +32,7 @@ const Story: FunctionComponent<StoryProps> = ({
 
                     <Row>
                         <Col style={{ color: '#aaa' }}>
-                            <i className="fas fa-eye"></i> {story.views} {" "}
+                            <ViewIcon /> {story.views} {" "}
                             <i className="fas fa-comment"></i> {story.numReviews}
                         </Col>
                         <Col className="text-right">

@@ -12,6 +12,7 @@ import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { StoryUpdateActionTypes } from 'types/stories';
 import { RouteComponentProps } from 'react-router';
+import { ImageIcon } from 'components/icons';
 
 const categories = [
     { value: 'Thriller' },
@@ -106,7 +107,7 @@ const EditScreen = ({
         }
     };
 
-	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         dispatch(updateStory({
@@ -161,7 +162,7 @@ const EditScreen = ({
                     </Form.Group>
 
                     <Form.Group controlId='image'>
-                        <Image src={image} alt="Image" fluid />
+                        <Image src={image} alt="Image" className="preview" fluid />
                         <Form.Label>Image</Form.Label>
                         <Form.Control
                             type='text'
@@ -169,6 +170,7 @@ const EditScreen = ({
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
                         ></Form.Control>
+                        <ImageIcon />
                         <input
                             type="file"
                             id='image-file'
@@ -178,6 +180,7 @@ const EditScreen = ({
                     </Form.Group>
 
                     <ReactQuill
+                        className="editor"
                         theme="snow"
                         value={body}
                         onChange={setBody}

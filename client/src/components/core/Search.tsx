@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SearchIcon } from 'components/icons';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ const Search = () => {
                 className='mr-sm-2 ml-sm-5'
             ></Form.Control>
             <Button type='submit' className='p-2 btn-red'>
-                <i className="fas fa-search"></i>
+                <SearchIcon />
             </Button>
         </Form>
     )

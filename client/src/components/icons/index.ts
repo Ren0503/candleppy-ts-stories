@@ -1,0 +1,17 @@
+export { AddIcon } from './AddIcon';
+export { CloseIcon } from './CloseIcon';
+export { CollectionIcon } from './CollectionIcon';
+export { CreateIcon } from './CreateIcon';
+export { EditIcon } from './EditIcon';
+export { HomeIcon } from './HomeIcon';
+export { ImageIcon } from './ImageIcon';
+export { LogoutIcon } from './LogoutIcon';
+export { PauseIcon } from './PauseIcon';
+export { PlayIcon } from './PlayIcon';
+export { RemoveIcon } from './RemoveIcon';
+export { SearchIcon } from './SearchIcon';
+export { StopIcon } from './StopIcon';
+export { TrashIcon } from './TrashIcon';
+export { UserIcon } from './UserIcon';
+export { ViewIcon } from './ViewIcon';
+export { VolumeIcon } from './VolumeIcon';
