@@ -9,6 +9,17 @@
     display: flex;
 }
 
+.name {
+    display: flex;
+    justify-content: space-between;
+}
+
 .story-list {
     padding: 5px;
+    margin: 5px;
+    border-top: 1px solid #aaa;
+}
+
+.story-list p {
+    margin: 0px;
 }

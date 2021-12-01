@@ -15,3 +15,4 @@ export { TrashIcon } from './TrashIcon';
 export { UserIcon } from './UserIcon';
 export { ViewIcon } from './ViewIcon';
 export { VolumeIcon } from './VolumeIcon';
+export { ReviewIcon } from './ReviewIcon';

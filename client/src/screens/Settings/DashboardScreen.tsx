@@ -110,9 +110,6 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
                             onChange={(e) => setNameCol(e.target.value)}
                             placeholder='Create collection...'
                         ></Form.Control>
-                        <Button type="submit">
-                            <CollectionIcon />
-                        </Button>
                     </Form>
 
                     {collections.map((collection) => (

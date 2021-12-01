@@ -14,7 +14,7 @@ import {
     Card,
     Badge
 } from 'react-bootstrap';
-import { RemoveIcon, TrashIcon, ViewIcon } from 'components/icons';
+import { RemoveIcon, ReviewIcon, TrashIcon, ViewIcon } from 'components/icons';
 
 interface MatchParams {
     id: string;
@@ -63,13 +63,13 @@ const CollectionScreen = ({
     ]);
 
     const deleteHandler = (id: string) => {
-        if (window.confirm('Are you sure')) {
+        if (window.confirm('Are you sure delete collection?')) {
             dispatch(deleteCollection(id));
         }
     };
 
     const removeHandler = (collectionId: string, storyId: string) => {
-        if (window.confirm('Are you sure')) {
+        if (window.confirm('Are you sure remove story from collection?')) {
             dispatch(removeStoryFromCollection(collectionId, storyId));
         }
     }
@@ -111,27 +111,27 @@ const CollectionScreen = ({
                             {collection.stories.map((story) => (
                                 <Row className="story-list">
                                     <Col md={3}>
-                                        <Image src={story.image} alt="Thumbnail" fluid />
+                                        <Image src={story.image} alt="Thumbnail" className="thumbnail" fluid />
                                     </Col>
                                     <Col md={9}>
-                                        <div>
+                                        <div className="story-name">
                                             <Badge>{story.category}</Badge>
-                                            <Button
-                                                className='btn-red text-right'
+                                            <button
+                                                className='btn-remove'
                                                 onClick={() => removeHandler(collection._id, story._id)}>
                                                 <RemoveIcon />
-                                            </Button>
+                                            </button>
                                         </div>
 
                                         <h6>{story.title}</h6>
 
-                                        {story.description.length > 30
-                                            ? <p>{story.description.substring(0, 30) + "..."}</p>
+                                        {story.description.length > 50
+                                            ? <p>{story.description.substring(0, 50) + "..."}</p>
                                             : <p>story.description</p>
                                         }
 
                                         <ViewIcon /> {story.views} {" "}
-                                        <i className="fas fa-comment"></i> {story.numReviews}
+                                        <ReviewIcon /> {story.numReviews}
                                     </Col>
                                 </Row>
                             ))}

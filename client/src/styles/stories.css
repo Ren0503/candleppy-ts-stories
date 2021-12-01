@@ -116,3 +116,22 @@
     background-color: #af0404;
     border: none;
 }
+
+.btn-remove {
+    background: none;
+    padding: none;
+}
+
+.editor {
+    background-color: #fff;
+    color: #000;
+}
+
+.editor p {
+    color: #000;
+}
+
+.thumbnail {
+    border: 1px solid #123;
+    border-radius: 15px;
+}

@@ -9,7 +9,7 @@ import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { MainLayout } from 'layouts';
 import { StoryCreateReviewActionTypes } from 'types/stories';
-import { AddIcon } from 'components/icons';
+import { AddIcon, EditIcon, TrashIcon } from 'components/icons';
 
 interface MatchParams {
     id: string;
@@ -65,7 +65,7 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
     };
 
     const deleteHandler = (id: string) => {
-        if (window.confirm('Are you sure')) {
+        if (window.confirm('Are you sure delete story?')) {
             dispatch(deleteStory(id));
         }
     };
@@ -100,19 +100,27 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                                 <Row>
                                     <Col md={6}>
                                         <Badge style={{ background: "#8a2be2" }}>{story.category}</Badge>
-                                        {isAuthor && <Button
-                                            variant='danger'
-                                            className='btn-sm'
-                                            onClick={() => deleteHandler(story._id)}>
-                                            <i className='fas fa-trash'></i>
-                                        </Button>}
+                                        {isAuthor && <>
+                                            <Link to={`/story/${story._id}/edit`}>
+                                                <Button variant='primary'>
+                                                    <EditIcon />
+                                                </Button>
+                                            </Link>
+                                            <Button
+                                                variant='danger'
+                                                className='btn-sm'
+                                                onClick={() => deleteHandler(story._id)}>
+                                                <TrashIcon />
+                                            </Button>
+                                        </>
+                                        }
                                     </Col>
                                     <Col className="text-right" md={6}>
                                         <i>{story.createdAt.substring(0, 10)}</i>
                                     </Col>
                                 </Row>
                             </div>
-                            <div className="author">
+                            <div className="author-story">
                                 <Row>
                                     <Col md={1}>
                                         <Image className="ml-1" src={story.author.avatar} width="50" alt="Avatar" roundedCircle />

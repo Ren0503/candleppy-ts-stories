@@ -35,3 +35,7 @@ label {
 a {
     color: #f43547;
 }
+
+a:hover {
+    color: grey;
+}
