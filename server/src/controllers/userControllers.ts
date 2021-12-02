@@ -107,6 +107,7 @@ export const updateUserProfile = asyncHandler(
                 name: updatedUser.name,
                 email: updatedUser.email,
                 isAdmin: updatedUser.isAdmin,
+                avatar: updatedUser.avatar,
                 bio: updatedUser.bio,
                 token: generateToken(updatedUser._id)
             });

@@ -12,7 +12,9 @@ import {
     Col,
     Image,
     Card,
-    Badge
+    Badge,
+    OverlayTrigger,
+    Tooltip
 } from 'react-bootstrap';
 import { RemoveIcon, ReviewIcon, TrashIcon, ViewIcon } from 'components/icons';
 
@@ -115,12 +117,20 @@ const CollectionScreen = ({
                                     </Col>
                                     <Col md={9}>
                                         <div className="story-name">
-                                            <Badge>{story.category}</Badge>
-                                            <button
-                                                className='btn-remove'
-                                                onClick={() => removeHandler(collection._id, story._id)}>
-                                                <RemoveIcon />
-                                            </button>
+                                            <Badge className="category">{story.category}</Badge>
+                                            <OverlayTrigger
+                                                overlay={
+                                                    <Tooltip>
+                                                        Remove Story
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <button
+                                                    className='btn-remove'
+                                                    onClick={() => removeHandler(collection._id, story._id)}>
+                                                    <RemoveIcon />
+                                                </button>
+                                            </OverlayTrigger>
                                         </div>
 
                                         <h6>{story.title}</h6>

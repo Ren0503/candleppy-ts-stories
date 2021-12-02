@@ -33,12 +33,6 @@ const Header = () => {
                 <Navbar.Toggle aria-controls='navbarScroll' style={{ backgroundColor: '#fff' }} />
                 <Navbar.Collapse id='navbarScroll'>
                     <Nav className='ml-auto' navbarScroll>
-                        <Nav.Link href="/category">All</Nav.Link>
-                        <Nav.Link href="/category/discuss">Discuss</Nav.Link>
-                        <Nav.Link href="/category/science">Science</Nav.Link>
-                        <Nav.Link href="/category/culture">Culture</Nav.Link>
-                        <Nav.Link href="/category/sharing">Sharing</Nav.Link>
-                        <Nav.Link href="/category/indite">Indite</Nav.Link>
                         {userInfo ? (
                             <>
                                 <Image src={userInfo.avatar} width="40" height="40" roundedCircle />

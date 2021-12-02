@@ -10,7 +10,7 @@ const ScrollToTop = () => {
         return () => {
             unlisten();
         }
-    }, []);
+    }, [history]);
 
     return null;
 }

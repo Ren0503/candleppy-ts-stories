@@ -56,7 +56,7 @@ const Rating: FunctionComponent<RatingProps> = ({
 };
 
 Rating.defaultProps = {
-    color: '#f8e825'
+    color: '#af0404'
 };
 
 export default Rating;

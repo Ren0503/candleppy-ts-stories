@@ -3,13 +3,13 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStoryReview, deleteStory, detailStory } from 'actions';
 import { Loader, Message } from 'components/shared';
-import { ListGroup, Row, Col, Form, Image, Button, Breadcrumb, Badge } from 'react-bootstrap';
+import { ListGroup, Row, Col, Form, Image, Button, Breadcrumb, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Rating, TopStories, TextToSpeech } from 'components/stories';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { MainLayout } from 'layouts';
 import { StoryCreateReviewActionTypes } from 'types/stories';
-import { AddIcon, EditIcon, TrashIcon } from 'components/icons';
+import { CreateIcon, EditIcon, TrashIcon } from 'components/icons';
 
 interface MatchParams {
     id: string;
@@ -94,15 +94,25 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                             <TextToSpeech text={story.body} />
                             <div className="paper text-justify">
                                 <h3 className="text-center p-3">{story.title}</h3>
-                                <i>"{story.description}"</i>
+                                <div className="author-story">
+                                    <Row>
+                                        <Col md={1}>
+                                            <Image className="ml-1" src={story.author.avatar} width="50" alt="Avatar" roundedCircle />
+                                        </Col>
+                                        <Col md={11}>
+                                            <h6>{story.author.name}</h6>
+                                            <i>"{story.description}"</i>
+                                        </Col>
+                                    </Row>
+                                </div>
                                 <Image src={story.image} fluid className="p-3" />
                                 <div className="text-justify paper-body" dangerouslySetInnerHTML={{ __html: story.body }} />
                                 <Row>
                                     <Col md={6}>
-                                        <Badge style={{ background: "#8a2be2" }}>{story.category}</Badge>
+                                        <Badge className="category">{story.category}</Badge>
                                         {isAuthor && <>
                                             <Link to={`/story/${story._id}/edit`}>
-                                                <Button variant='primary'>
+                                                <Button variant='primary' className='btn-sm'>
                                                     <EditIcon />
                                                 </Button>
                                             </Link>
@@ -117,16 +127,6 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                                     </Col>
                                     <Col className="text-right" md={6}>
                                         <i>{story.createdAt.substring(0, 10)}</i>
-                                    </Col>
-                                </Row>
-                            </div>
-                            <div className="author-story">
-                                <Row>
-                                    <Col md={1}>
-                                        <Image className="ml-1" src={story.author.avatar} width="50" alt="Avatar" roundedCircle />
-                                    </Col>
-                                    <Col md={11}>
-                                        <h6>{story.author.name}</h6>
                                     </Col>
                                 </Row>
                             </div>
@@ -209,16 +209,27 @@ const DetailScreen: FunctionComponent<DetailScreenProps> = ({
                             </div>
                         </Col>
                         <Col md={3}>
-                            <Button
-                                onClick={addToCollection}
-                                disabled={!userInfo}
-                                className='btn btn-red'
-                                type='button'>
-                                <AddIcon /> Add To Collection
-                            </Button>
                             <TopStories />
                         </Col>
                     </Row>
+
+                    <div className="create">
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Add Story
+                                </Tooltip>
+                            }
+                        >
+                            <Button
+                                onClick={addToCollection}
+                                disabled={!userInfo}
+                                className='btn btn-red text-center'
+                                type='button'>
+                                <CreateIcon />
+                            </Button>
+                        </OverlayTrigger>
+                    </div>
                 </>
             )
     }

@@ -15,17 +15,15 @@ import { RouteComponentProps } from 'react-router';
 import { ImageIcon } from 'components/icons';
 
 const categories = [
-    { value: 'Thriller' },
-    { value: 'Horror' },
-    { value: 'Sports' },
-    { value: 'Business' },
-    { value: 'Music' },
-    { value: 'Movie' },
-    { value: 'Culture' },
-    { value: 'Book' },
-    { value: 'Travel' },
-    { value: 'Sharing' },
-    { value: 'Indite' },
+    { value: 'Ma Quỷ' },
+    { value: 'Dân Gian' },
+    { value: 'Nước Ngoài' },
+    { value: 'Việt Nam' },
+    { value: 'Creepypasta' },
+    { value: 'Truyền thuyết' },
+    { value: 'Tự Truyện' },
+    { value: 'Kinh Dị' },
+    { value: 'Trinh Thám' },
 ];
 
 interface MatchParams {
@@ -145,6 +143,7 @@ const EditScreen = ({
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                         >
+                            <option>Choose category</option>
                             {categories.map((categoryType, index) => (
                                 <option key={index} value={categoryType.value}>{categoryType.value}</option>
                             ))}

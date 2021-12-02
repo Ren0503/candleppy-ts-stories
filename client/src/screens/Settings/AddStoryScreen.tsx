@@ -6,7 +6,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { AppDispatch } from 'store';
 import { ReduxState } from 'types/ReduxState';
 import { addStoryToCollection, listCollectionsUser } from 'actions';
-import { Form, Button } from 'react-bootstrap';
+import { Image, Button } from 'react-bootstrap';
+import imagGif from 'assets/collection.gif';
+import "styles/collection.css";
 
 interface MatchParams {
     id: string;
@@ -67,32 +69,38 @@ const AddStoryScreen = ({
         else if (error) return <Message variant='danger'>{error}</Message>;
         else
             return (
-                <>
-                    <h2>Choose Collections</h2>
+                <div className="text-center">
+                    <h2>Your Collections</h2>
 
-                    <select
-                        name="collection"
-                        id="collectionId"
-                        value={chooseCollection}
-                        onChange={(e) => setChooseCollection(e.target.value)}
-                    >
-                        {collections.map((collection) => (
-                            <option key={collection._id} value={collection._id}>{collection.name}</option>
-                        ))}
-                    </select>
+                    <div className="addCollection">
+                        <Image src={imagGif} alt="Add" fluid />
 
-                    <Button
-                        type="button"
-                        className="btn-create"
-                        onClick={() => addStoryHandler(chooseCollection, storyId)}
-                        disabled={!chooseCollection}
-                    >
-                        <i className="fas fa-plus"></i>
-                    </Button>
+                        <select
+                            name="collection"
+                            id="collectionId"
+                            value={chooseCollection}
+                            onChange={(e) => setChooseCollection(e.target.value)}
+                        >
+                            <option>Open this your collections</option>
+                            {collections.map((collection) => (
+                                <option key={collection._id} value={collection._id}>{collection.name}</option>
+                            ))}
+                        </select>
 
-                    {loadingAdd && <Loader />}
-                    {errorAdd && <Message variant='danger'>{errorAdd}</Message>}
-                </>
+                        <Button
+                            type="button"
+                            className="btn-red"
+                            onClick={() => addStoryHandler(chooseCollection, storyId)}
+                            disabled={!chooseCollection}
+                        >
+                            Choose Collection
+                        </Button>
+
+                        {loadingAdd && <Loader />}
+                        {errorAdd && <Message variant='danger'>{errorAdd}</Message>}
+
+                    </div>
+                </div>
             )
     }
 

@@ -27,7 +27,6 @@ const Story: FunctionComponent<StoryProps> = ({
 
                     <Rating
 						value={story.rating}
-						text={`${story.numReviews} reviews`}
 					/>
 
                     <Row>

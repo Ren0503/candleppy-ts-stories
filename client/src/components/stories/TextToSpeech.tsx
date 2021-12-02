@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 
 interface TextToSpeechProps {
     text: string;
@@ -8,10 +7,8 @@ interface TextToSpeechProps {
 const TextToSpeech: FunctionComponent<TextToSpeechProps> = ({
     text
 }: TextToSpeechProps) => {
-    const [volume, setVolume] = useState<number>(1);
     let speech = new SpeechSynthesisUtterance();
     speech.text = text;
-    speech.volume = volume;
 
     const start = () => {
         window.speechSynthesis.speak(speech);

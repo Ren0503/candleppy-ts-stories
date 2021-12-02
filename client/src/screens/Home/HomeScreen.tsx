@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Route, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listStories } from 'actions';
 import { Breadcrumb, Col, Row, Button } from 'react-bootstrap';
@@ -21,6 +21,8 @@ const HomeScreen = ({
         params: { keyword, category }
     }
 }: HomeScreenProps) => {
+    const [showMore, setShowMore] = useState(8);
+
     const dispatch = useDispatch<AppDispatch>();
 
     const storyList = useSelector((state: ReduxState) => state.storyList)
@@ -29,6 +31,10 @@ const HomeScreen = ({
     useEffect(() => {
         dispatch(listStories(keyword, category));
     }, [dispatch, keyword, category]);
+
+    const handleShowMore = () => {
+        setShowMore(showMore + 4);
+    };
 
     const displayStories = () => {
         if (loading) return <Loader />
@@ -48,13 +54,20 @@ const HomeScreen = ({
                             <Search />
                         </div>
                     )}
-                    <h4 className="my-3">All Stories</h4>
+                    <h4 className="my-3">All Stories ({count})</h4>
                     <Row className="mt-2">
-                        {stories.map((story) => (
+                        {stories.slice(0, showMore).map((story) => (
                             <Col key={story._id} sm={12} md={6} lg={3}>
                                 <Story story={story} />
                             </Col>
                         ))}
+                        {stories.length > 8 &&
+                            <div style={{ margin: 'auto' }}>
+                                <Button className='btn btn-red' onClick={handleShowMore}>
+                                    <i className="fas fa-angle-down"></i>
+                                </Button>
+                            </div>
+                        }
                     </Row>
                 </>
             )

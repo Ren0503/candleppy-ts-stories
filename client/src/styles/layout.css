@@ -56,10 +56,6 @@
     border-bottom: 1px solid;
 }
 
-.table {
-    color: #fff;
-}
-
 .home {
     background-image: url("assets/auth.jpg");
     background-position: center;
@@ -112,6 +108,11 @@
     .home {
         padding: 0;
     }
+}
+
+.category {
+    background-color: #ddd !important;
+    color: #000;
 }
 
 /*

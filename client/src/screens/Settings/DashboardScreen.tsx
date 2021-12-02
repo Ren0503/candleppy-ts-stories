@@ -15,9 +15,8 @@ import {
     Image,
     OverlayTrigger,
     Tooltip,
-    Card
 } from 'react-bootstrap';
-import { CollectionIcon, CreateIcon } from 'components/icons';
+import { CreateIcon } from 'components/icons';
 
 interface DashboardScreenProps extends RouteComponentProps { }
 
