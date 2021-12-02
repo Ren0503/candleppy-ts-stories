@@ -9,6 +9,7 @@ import { addStoryToCollection, listCollectionsUser } from 'actions';
 import { Image, Button } from 'react-bootstrap';
 import imagGif from 'assets/collection.gif';
 import "styles/collection.css";
+import { CollectionAddStoryActionTypes } from 'types/collections';
 
 interface MatchParams {
     id: string;
@@ -41,6 +42,10 @@ const AddStoryScreen = ({
     } = collectionAddStory;
 
     useEffect(() => {
+        dispatch({
+            type: CollectionAddStoryActionTypes.COLLECTION_ADD_STORY_RESET
+        });
+        
         if (!userInfo) {
             history.push('/login');
         } else if (successAdd) {

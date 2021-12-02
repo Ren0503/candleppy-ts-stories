@@ -17,6 +17,7 @@ import {
     Tooltip,
 } from 'react-bootstrap';
 import { CreateIcon } from 'components/icons';
+import { StoryCreateActionTypes } from 'types/stories';
 
 interface DashboardScreenProps extends RouteComponentProps { }
 
@@ -54,6 +55,8 @@ const DashboardScreen = ({ history }: DashboardScreenProps) => {
         if (!userInfo) {
             history.push('/login');
         } else {
+            dispatch({ type: StoryCreateActionTypes.STORY_CREATE_RESET });
+            
             if (successCreate && createdStory)
                 history.push(`/story/${createdStory._id}/edit`);
             if (successCollection && createdCollection)
